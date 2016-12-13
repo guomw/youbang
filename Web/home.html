@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content="" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/static/css/style.min-1.0.1.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/grid-framework.css">
+    <title>霸盟后台</title>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content tooltip-demo">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-left">今日数据</span>                            
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-2" style="cursor:pointer;" onclick="hotUtil.newTab('admin/userlist.html?type=1', '盟友列表')">
+                                    <h1 class="no-margins" id="todayAllyCount">0</h1>
+                                    <small>新增盟友量</small>
+                                </div>
+                                <div class="col-md-2" style="cursor:pointer;" onclick="hotUtil.newTab('admin/customerlist.html', '客户信息列表')">
+                                    <h1 class="no-margins"  id="todayCustomerCount">0</h1>
+                                    <small>新增客户信息量</small>
+                                </div>
+                                <div class="col-md-2" style="cursor:pointer;display:none;" id="articleMsg" onclick="hotUtil.newTab('admin/articlelist.html?type=0', '资讯审核列表')">
+                                    <h1 class="no-margins"  id="todayArticleCount">0</h1>
+                                    <small >新增审核资讯</small>
+                                </div>
+                                <div class="col-md-2" style="cursor:pointer;display:none;" id="articleMsg2"  onclick="hotUtil.newTab('admin/articlelist.html', '资讯列表')">
+                                    <h1 class="no-margins" id="todayArticleCount2">0</h1>
+                                    <small>新增资讯</small>
+                                </div>
+
+                                <div class="col-md-2" style="cursor:pointer;" onclick="hotUtil.newTab('admin/messagelist.html?type=2','接收消息')">
+                                    <h1 class="no-margins"  id="todayMessageCount">0</h1>
+                                    <small>新消息</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-left">昨日数据</span>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h1 class="no-margins" id="yesterdayAllyCount">0</h1>
+                                    <small>新增盟友量</small>
+                                </div>
+                                <div class="col-md-2">
+                                    <h1 class="no-margins" id="yesterdayCustomerCount">0</h1>
+                                    <small>新增客户信息量</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/plugins/hot/Jquery.util.js"></script>
+    <script src="/static/js/plugins/layer/layer.min.js"></script>
+    <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+</body>
+</html>
