@@ -25,7 +25,7 @@ var couponHelper = {
             pageIndex: page,
             pageSize: 20,
             key: $("#keyword").val(),
-            searchType: $("#sltStatus").val(),
+            searchType:$("#sltStatus").val(),
             startTime: $("#beginTime").val(),
             endTime: $("#endTime").val(),
             couponId: this.couponId
@@ -44,6 +44,7 @@ var couponHelper = {
                             tempHtml = tempHtml.replace("{Mobile}", item.Mobile);
                             tempHtml = tempHtml.replace("{Time}", item.time);
                             tempHtml = tempHtml.replace("{GetTime}", item.GetTime);
+                            tempHtml = tempHtml.replace("{RecycleTime}", item.RecycleTime);
                             if (item.IsUse == 1) {
                                 tempHtml = tempHtml.replace("{UseStatusName}", "已核销");
                                 tempHtml = tempHtml.replace("{UseTime}", item.UseTime);
@@ -53,7 +54,7 @@ var couponHelper = {
                                 tempHtml = tempHtml.replace("{UseTime}", "--/--");
                             }
 
-                            
+
                             listhtml += tempHtml;
                         });
                         $("#listMode").html(listhtml);

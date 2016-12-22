@@ -137,25 +137,53 @@ $(function () {
         });
         return childHtml;
     }
-
-
+    isLogin();
     defaultMenus();
-    //LoadMenu();
+    LoadMenu();
 
 
-    var def = hotUtil.GetCookie("SHOPID");
-    setInterval(function () {
-        if (!hotUtil.isNullOrEmpty(hotUtil.GetCookie("SHOPID"))) {
-            if (hotUtil.GetCookie("SHOPID") != def)
-                window.location.reload();
-        }
-        else
-            window.location.reload();
-    }, 5000);
+    //var def = hotUtil.GetCookie("SHOPID");
+    //setInterval(function () {
+    //    if (!hotUtil.isNullOrEmpty(hotUtil.GetCookie("SHOPID"))) {
+    //        if (hotUtil.GetCookie("SHOPID") != def)
+    //            window.location.reload();
+    //    }
+    //    else
+    //        window.location.reload();
+    //}, 5000);
 });
 
 
-
+function isLogin() {
+    //请求头
+    var postData = {
+        action: "isLogin"
+    }
+    hotUtil.ajaxCall("handler/HQ.ashx", postData, function (ret, err) {
+        if (ret != null) {
+            if (ret.status == 200) {
+                var userData = ret.data.userData;
+                if (userData != null) {
+                    $(".loginname").text(userData.LoginName);                    
+                    $(".loginusername").text(userData.UserName)
+                }
+            }
+            else {
+                if (ret.status == 70034 || ret.status == 7003 || ret.status == 7002) {
+                    swal({
+                        title: ret.statusText,
+                        text: "即将跳转登录页面.",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function () {
+                        window.location.href = "/index.html";
+                    }, 2000);
+                }
+            }
+        }
+    });
+}
 
 function newTab(url, name) {
     var index = false;

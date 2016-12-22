@@ -1,0 +1,114 @@
+2016/12/19 10:27:38,710 ERROR action:GetDrawMoneyList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteReader(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 186
+   在 Logic.DAL.UserDAL.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 700
+   在 Logic.UserLogic.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 405
+   在 Web.handler.HQ.GetDrawMoneyList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 312
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 115 Message:无法绑定由多个部分组成的标识符 "r.CreateTime"。
+2016/12/19 10:27:43,70 ERROR action:GetDrawMoneyList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteReader(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 186
+   在 Logic.DAL.UserDAL.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 700
+   在 Logic.UserLogic.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 405
+   在 Web.handler.HQ.GetDrawMoneyList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 312
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 115 Message:无法绑定由多个部分组成的标识符 "r.CreateTime"。
+2016/12/19 10:28:18,854 ERROR action:GetDrawMoneyList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteReader(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 186
+   在 Logic.DAL.UserDAL.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 700
+   在 Logic.UserLogic.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 405
+   在 Web.handler.HQ.GetDrawMoneyList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 312
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 115 Message:无法绑定由多个部分组成的标识符 "r.CreateTime"。
+2016/12/19 10:29:38,103 ERROR action:GetDrawMoneyList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteReader(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 186
+   在 Logic.DAL.UserDAL.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 700
+   在 Logic.UserLogic.GetDrawMoneyList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 405
+   在 Web.handler.HQ.GetDrawMoneyList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 312
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 115 Message:无法绑定由多个部分组成的标识符 "r.CreateTime"。
+2016/12/19 10:47:46,768 ERROR action:UpdateDrawMoneyStatus StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteNonQuery(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.UserDAL.UpdateDrawMoneyStatus(Int32 id, Int32 status, String remark) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 742
+   在 Logic.UserLogic.UpdateDrawMoneyStatus(Int32 id, Int32 status, String remark) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 417
+   在 Web.handler.HQ.UpdateDrawMoneyStatus() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 327
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 118 Message:'Remark' 附近有语法错误。
+2016/12/19 10:47:55,108 ERROR action:UpdateDrawMoneyStatus StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteNonQuery(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.UserDAL.UpdateDrawMoneyStatus(Int32 id, Int32 status, String remark) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 742
+   在 Logic.UserLogic.UpdateDrawMoneyStatus(Int32 id, Int32 status, String remark) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 417
+   在 Web.handler.HQ.UpdateDrawMoneyStatus() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 327
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 118 Message:'Remark' 附近有语法错误。
+2016/12/19 10:50:00,650 ERROR action:UpdateDrawMoneyStatus StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteNonQuery(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.UserDAL.UpdateDrawMoneyStatus(Int32 id, Int32 status, String remark) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 742
+   在 Logic.UserLogic.UpdateDrawMoneyStatus(Int32 id, Int32 status, String remark) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 417
+   在 Web.handler.HQ.UpdateDrawMoneyStatus() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 327
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 118 Message:'Remark' 附近有语法错误。

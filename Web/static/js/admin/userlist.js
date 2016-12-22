@@ -26,8 +26,7 @@ var userHelper = {
             pageIndex: page,
             pageSize: 20,
             key: $("#keyword").val(),
-            searchType: $("#stdType").val(),
-            ally: this.isAlly == 1 ? 0 : 1,
+            applystatus: self.isAlly == 2 ? 0 : 1,
             startTime: $("#beginTime").val(),
             endTime: $("#endTime").val()
         }
@@ -41,42 +40,40 @@ var userHelper = {
                         $.each(ret.data.Rows, function (i, item) {
                             var tempHtml = $("#templist").html();
                             tempHtml = tempHtml.replace("{NO}", i + 1);
-                            tempHtml = tempHtml.replace("{LoginName}", item.LoginName);
-                            tempHtml = tempHtml.replace(/{UserId}/gm, item.UserId);
-                            tempHtml = tempHtml.replace("{ShopName}", item.ShopProv + " " + item.ShopCity + " " + item.ShopName);
-                            tempHtml = tempHtml.replace('{BelongOneName}', item.BelongOneUserName);
-                            tempHtml = tempHtml.replace(/{RealName}/g, item.RealName);
                             tempHtml = tempHtml.replace("{NickName}", item.NickName);
-                            tempHtml = tempHtml.replace("{LevelName}", item.LevelName);
-                            tempHtml = tempHtml.replace("{UserMobile}", item.UserMobile);
-                            tempHtml = tempHtml.replace("{IsActive}", item.IsActive);
-                            tempHtml = tempHtml.replace("{type}", self.isAlly);
-                            if (!hotUtil.isNullOrEmpty(item.UserHeadImg))
-                                tempHtml = tempHtml.replace("{UserHeadImg}", item.UserHeadImg);
+                            tempHtml = tempHtml.replace(/{UserId}/gm, item.UserId);
+                            tempHtml = tempHtml.replace("{RealName}", item.RealName);
+                            tempHtml = tempHtml.replace("{LevelName}", item.UserIdentity == 2 ? "店员" : "分销商");
+                            tempHtml = tempHtml.replace("{Mobile}", item.Mobile);
+                            if (!hotUtil.isNullOrEmpty(item.HeadImg))
+                                tempHtml = tempHtml.replace("{UserHeadImg}", item.HeadImg);
                             else
                                 tempHtml = tempHtml.replace("{UserHeadImg}", "/static/img/bg.png");
-                            tempHtml = tempHtml.replace("{OrderSuccessAmount}", item.OrderSuccessAmount);
-                            tempHtml = tempHtml.replace("{CustomerAmount}", item.CustomerAmount);
-                            tempHtml = tempHtml.replace("{ActiveStatus}", item.IsActive == 1 ? "<span style='color:red;'>激活</span>" : "已冻结")
 
-                            tempHtml = tempHtml.replace("{RegTime}", item.CreateTime);
+                            tempHtml = tempHtml.replace("{ApplyTime}", item.ApplyTime);
+                            if (item.ApplyStatus == 1) {
+                                tempHtml = tempHtml.replace("{LableText}", item.IsActive == 1 ? "冻结" : "激活");
+                                tempHtml = tempHtml.replace("{ActiveStatus}", item.IsActive == 1 ? "<span style='color:red;'>激活</span>" : "已冻结")
+                            }
+                            else {
+                                tempHtml = tempHtml.replace("{ActiveStatus}", item.ApplyStatus == 0 ? "申请中" : "已拒绝")
+                                tempHtml = tempHtml.replace("{LableText}", "");
+                            }
+
+                            if (item.ApplyStatus != 1) {
+                                tempHtml = tempHtml.replace(/{display}/gm, item.ApplyStatus == 0 ? "" : "display:none");
+                            }
+                            else {
+                                tempHtml = tempHtml.replace(/{display}/gm, "");
+                            }
 
                             listhtml += tempHtml;
                         });
                         $("#listMode").html(listhtml);
-
-                        if (self.isAlly == 1) {
-                            $(".belongOneName").show();
-                        }
-
+                        if (self.isAlly == 2)
+                            $(".applyHtml").show();
                         //初始化分页
                         var pageinate = new hotUtil.paging(".pagination", ret.data.PageIndex, ret.data.PageSize, ret.data.PageCount, ret.data.Total, 7);
-                        //pageinate.init((p) => {
-                        //    goTo(p, function (page) {
-                        //        userHelper.loadList(page);
-                        //    });
-                        //});
-
                         pageinate.init(function () {
                             goTo(p, function (page) {
                                 userHelper.loadList(page);
@@ -107,65 +104,16 @@ var userHelper = {
         }
         return model;
     },
-    edit: function () {
-        var param = hotUtil.serializeForm("#signupForm .form-control");
-        param.action = "editUser";
-        param.ally = this.isAlly == 1 ? 0 : 1;
-        hotUtil.loading.show();
-        hotUtil.ajaxCall(this.ajaxUrl, param, function (ret, err) {
-            if (ret) {
-                if (ret.status == 200) {
-                    swal("提交成功", "", "success");
-                    userHelper.loadList(userHelper.pageIndex);
-                    $(".close").click();
-                }
-                else {
-                    swal(ret.statusText, "", "warning");
-                }
-            }
-            hotUtil.loading.close();
-        });
-    },
-    del: function (dataId) {
-        swal({
-            title: "您确定要删除这条信息吗",
-            text: "删除后将无法恢复，请谨慎操作！",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "删除",
-            closeOnConfirm: false,
-        }, function () {
-            var param = {
-                action: "DeleteUser",
-                userid: dataId
-            }
-            hotUtil.loading.show();
-            hotUtil.ajaxCall(userHelper.ajaxUrl, param, function (ret, err) {
-                if (ret) {
-                    if (ret.status == 200) {
-                        swal("删除成功", "您已经永久删除了这条信息。", "success");
-                        userHelper.loadList(userHelper.pageIndex);
-                    }
-                    else {
-                        swal(ret.statusText, "", "warning");
-                    }
-                }
-                hotUtil.loading.close();
-            });
-        });
-    },
-    updateActive: function (dataId, active) {
+    updateActive: function (dataId) {
         var param = {
             action: "UpdateUserActive",
-            userid: dataId,
-            active: parseInt(active) == 1 ? 0 : 1
+            userid: dataId
         }
         hotUtil.loading.show();
         hotUtil.ajaxCall(this.ajaxUrl, param, function (ret, err) {
             if (ret) {
                 if (ret.status == 200) {
-                    swal(param.active == 0 ? "账号已冻结" : "账号已激活", "", "success");
+                    swal("设置成功", "", "success");
                     userHelper.loadList(userHelper.pageIndex);
                 }
                 else {
@@ -173,101 +121,97 @@ var userHelper = {
                 }
             }
             hotUtil.loading.close();
+        });
+    },
+    UpdateApplyStatus: function (dataId, code) {
+        swal({
+            title: code == 1 ? "您确定要同意吗？" : "您确定要拒绝吗？",
+            text: code == 1 ? "" : "请输入拒绝理由",
+            type: code == 1 ? "warning" : "input",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            inputPlaceholder: "理由"
+        }, function (inputValue) {
+            if (inputValue) {
+                var param = {
+                    action: "UpdateApplyStatus",
+                    userid: dataId,
+                    active: code,
+                    remark: inputValue
+                }
+                hotUtil.loading.show();
+                hotUtil.ajaxCall(userHelper.ajaxUrl, param, function (ret, err) {
+                    if (ret) {
+                        if (ret.status == 200) {
+                            swal("操作成功", "", "success");
+                            userHelper.loadList(userHelper.pageIndex);
+                        }
+                        else {
+                            swal(ret.statusText, "", "warning");
+                        }
+                    }
+                    hotUtil.loading.close();
+                });
+            }
         });
     },
     dialog: function (dataId) {
         if (this.reset)
             this.reset.resetForm();
-        var data = this.getModel(dataId);
-        if (data != null) {
-            $("#modal-title").text("编辑" + (this.isAlly == 1 ? "盟友信息" : "盟主信息"));
-            $("#userid").val(dataId);
-            $("#username").val(data.RealName);
-            $("#usernickname").val(data.NickName);
-            $("#usermobile").val(data.UserMobile);
-            if (!hotUtil.isNullOrEmpty(data.LoginName))
-                $("#userloginname").val(data.LoginName).attr("readonly", "readonly");
-        }
-        else {
-            $("#userloginname").removeAttr("readonly");
-            $("#modal-title").text("添加盟主信息");
-            $("#signupForm input").val("");
-        }
+        $("#userid").val(dataId);
+        $("#userpwd").val("");
     },
-    goTab: function (dataId) {
-        var data = this.getModel(dataId);
-        hotUtil.newTab('admin/userdetails.html?userid=' + data.UserId + '&type=' + this.isAlly + '', (this.isAlly == 1 ? "盟友" : "盟主") + '详情-【' + data.RealName + '】');
+    editpwd: function () {
+        var self = this;
+        var postData = hotUtil.serializeForm("#signupForm .form-control");
+        postData.action = "editpwd";
+        hotUtil.loading.show();
+        hotUtil.ajaxCall(self.ajaxUrl, postData, function (ret, err) {
+            if (ret) {
+                if (ret.status == 200) {
+                    couponHelper.loadList(couponHelper.pageIndex);
+                    swal("提交成功", "", "success");
+                    $(".close").click();
+                }
+                else
+                    swal(ret.statusText, "", "warning");
+            }
+            hotUtil.loading.close();
+        });
     },
     pageInit: function () {
+        if (this.isAlly == 2)
+            $(".applyHtml").show();
         userHelper.loadList(userHelper.pageIndex);
         userHelper.validate();
-
-        if (this.isAlly == 1) {
-            $("#btnUser").hide();
-            $(".allyText").text("客户信息提交量");
-            $("#allyLable").text("盟友姓名");
-            $(".belongOneName").show();
-        }
-
-        var SHOP_INDENTITY = hotUtil.GetCookie("SHOP_INDENTITY");
-        if (SHOP_INDENTITY != 0 && this.isAlly != 1) {
-            $("#btnUser").show();
-        }
     },
     validate: function () {
         var e = "<i class='fa fa-times-circle'></i> ";
         this.reset = $("#signupForm").validate({
             rules: {
-                username: {
+                userpwd: {
                     required: !0,
-                    minlength: 2
-                },
-                usermobile: "required",
-                userloginname: {
-                    required: !0,
-                    minlength: 5
-                },
-                usernickname: "required",
-                password: {
-                    minlength: 6
+                    minlength: 6,
+                    maxlength: 20
                 }
             },
             messages: {
-                username: {
-                    required: e + "请输入" + (userHelper.isAlly == 1 ? "盟友" : "盟主") + "名称",
-                    minlength: e + "联系人必须两个字符以上"
-                },
-                usermobile: e + "请输入您的手机号码",
-                userloginname: {
-                    required: e + "请输入您的登录名",
-                    minlength: e + "登录名必须5个字符以上"
-                },
-                usernickname: e + "请输入昵称",
-                password: {
-                    minlength: e + "密码必须6个字符以上"
+                userpwd: {
+                    required: e + "请输入新密码",
+                    minlength: e + "最少6个字符",
+                    maxlength: e + "最多20个字符",
                 }
             },
             submitHandler: function (form) {
-                userHelper.edit();
+                userHelper.editpwd();
             }
         })
     }
 };
 
-$.validator.setDefaults({
-    highlight: function (e) {
-        $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
-    },
-    success: function (e) {
-        e.closest(".form-group").removeClass("has-error").addClass("has-success")
-    },
-    errorElement: "span",
-    errorPlacement: function (e, r) {
-        e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
-    },
-    errorClass: "help-block m-b-none",
-    validClass: "help-block m-b-none"
-});
 
 $(function () {
     userHelper.pageInit();

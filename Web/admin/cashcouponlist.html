@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--360浏览器优先以webkit内核解析-->
 
-    <title></title>
+    <title>优惠券</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link href="/static/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
@@ -41,8 +41,8 @@
                             </div>
                             <p style="height: 8px;"></p>
                             <div class="form-inline" style="max-width: 926px; text-align: right;">
-                                <button type="button" onclick="focusHelper.search()" class="btn btn-success">筛选</button>
-                                <button type="button" onclick="focusHelper.searchAll()" class="btn btn-success">显示全部</button>
+                                <button type="button" onclick="couponHelper.search()" class="btn btn-success">筛选</button>
+                                <button type="button" onclick="couponHelper.searchAll()" class="btn btn-success">显示全部</button>
                             </div>
                         </div>
                     </div>
@@ -65,9 +65,13 @@
                                     <tr>
                                         <th>序号</th>
                                         <th>标题</th>
+                                        <th>品牌</th>
                                         <th>有效期</th>
                                         <th>金额</th>
+                                        <th>数量</th>
+                                        <th>返利</th>
                                         <th>状态</th>
+                                        <th>说明</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
@@ -86,9 +90,13 @@
         <tr>
             <td>{NO}</td>            
             <td>{Title}</td>
+            <td>{BrandName}</td>
             <td>{Time}</td>
             <td>{Money}</td>
+            <td>{Amounts}</td>
+            <td>{RebateMoney}</td>
             <td>{StatusName}</td>
+            <td>{Remark}</td>
             <td>                
                 <span class="cursor-point" onclick="couponHelper.newTab('{CouponId}')">领取记录</span>
                 &nbsp;
@@ -121,9 +129,29 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">品牌：</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="sltBrand">
+                                        <option value="0">请选择</option>                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">现金券金额：</label>
                                 <div class="col-sm-4">
                                     <input id="couponmoney" name="couponmoney" class="form-control OnlyNum" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">数量：</label>
+                                <div class="col-sm-4">
+                                    <input id="couponamount" name="couponamount" class="form-control OnlyNum" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">返利：</label>
+                                <div class="col-sm-4">
+                                    <input id="couponrebate" name="couponrebate" class="form-control OnlyNum" type="number">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -141,6 +169,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">说明：</label>
+                                <div class="col-sm-8">
+                                    <textarea rows="4" class="form-control" id="couponremark" name="couponremark"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-5">
                                     <button class="btn btn-success" type="submit">提交</button>
                                 </div>
@@ -156,8 +192,7 @@
     <link href="/static/js/plugins/My97Datepicker/skin/WdatePicker.css" rel="stylesheet" />
     <script src="/static/js/jquery.min.js?v=2.1.4"></script>
     <script src="/static/js/plugins/hot/Jquery.util.js"></script>
-    <script src="/static/js/bootstrap.min.js?v=3.3.5"></script>
-    <script src="/static/js/content.min.js"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.5"></script>    
     <script src="/static/js/plugins/My97Datepicker/WdatePicker.js"></script>    
     <script src="/static/js/plugins/switchery/switchery.js"></script>
     <script src="/static/js/plugins/layer/layer.min.js"></script>

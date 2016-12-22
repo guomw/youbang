@@ -10,49 +10,97 @@ function getDemoData() {
     var menuList = [];
 
     menuList.push({
-        ItemCode: "0201",
+        ItemCode: "10001",
         ItemNavLabel: "分销管理",
-        ItemUrl: "admin/shoplist.html",
+        ItemUrl: "",
         ItemParentCode: "0",
         ItemShow: 1,
         ItemIcons: "fa-home"
     });
 
     menuList.push({
-        ItemCode: "0202",
-        ItemNavLabel: "盟主列表",
+        ItemCode: "1000101",
+        ItemNavLabel: "分销商列表",
         ItemUrl: "admin/userlist.html",
-        ItemParentCode: "0",
+        ItemParentCode: "10001",
         ItemShow: 1,
         ItemIcons: "fa-home"
     });
     menuList.push({
-        ItemCode: "0203",
-        ItemNavLabel: "盟友列表",
-        ItemUrl: "admin/userlist.html?type=1",
-        ItemParentCode: "0",
+        ItemCode: "1000102",
+        ItemNavLabel: "分销商申请列表",
+        ItemUrl: "admin/userlist.html?type=2",
+        ItemParentCode: "10001",
         ItemShow: 1,
         ItemIcons: "fa-home"
     });
 
     menuList.push({
-        ItemCode: "0204",
+        ItemCode: "10002",
         ItemNavLabel: "品牌管理",
-        ItemUrl: "admin/userlevel.html",
+        ItemUrl: "admin/brandlist.html",
         ItemParentCode: "0",
         ItemShow: 1,
         ItemIcons: "fa-home"
     });
 
     menuList.push({
-        ItemCode: "0205",
+        ItemCode: "10003",
         ItemNavLabel: "优惠券管理",
-        ItemUrl: "admin/articlelist.html",
+        ItemUrl: "",
         ItemParentCode: "0",
         ItemShow: 1,
         ItemIcons: "fa-home"
     });
 
+    menuList.push({
+        ItemCode: "1000301",
+        ItemNavLabel: "优惠券列表",
+        ItemUrl: "admin/cashcouponlist.html",
+        ItemParentCode: "10003",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+    menuList.push({
+        ItemCode: "1000302",
+        ItemNavLabel: "领取记录",
+        ItemUrl: "admin/coupongetlist.html",
+        ItemParentCode: "10003",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+    menuList.push({
+        ItemCode: "1000303",
+        ItemNavLabel: "核销记录",
+        ItemUrl: "admin/coupongetlist1.html",
+        ItemParentCode: "10003",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+    menuList.push({
+        ItemCode: "1000304",
+        ItemNavLabel: "回收记录",
+        ItemUrl: "admin/coupongetlist2.html",
+        ItemParentCode: "10003",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+    menuList.push({
+        ItemCode: "1000305",
+        ItemNavLabel: "返利记录",
+        ItemUrl: "admin/rebatelist.html",
+        ItemParentCode: "10003",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+    menuList.push({
+        ItemCode: "1000306",
+        ItemNavLabel: "体现申请列表",
+        ItemUrl: "admin/drawmoneylist.html",
+        ItemParentCode: "10003",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
 
 
     return menuList;

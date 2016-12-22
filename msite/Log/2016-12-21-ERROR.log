@@ -1,0 +1,136 @@
+2016/12/21 14:05:01,611 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。
+2016/12/21 14:05:57,406 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。
+2016/12/21 14:06:36,363 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。
+2016/12/21 14:12:51,136 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。
+2016/12/21 14:17:13,652 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。
+2016/12/21 14:17:38,307 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。
+2016/12/21 14:17:38,812 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。
+2016/12/21 14:17:41,571 ERROR action:MyShareCouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 247
+   在 Logic.UserLogic.GetAppMyShareCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 476
+   在 msite.handler.AjaxHandler.MyShareCouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 111
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 62 Message:必须声明标量变量 "@UserId"。

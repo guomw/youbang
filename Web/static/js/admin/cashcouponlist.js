@@ -14,8 +14,6 @@
 var couponHelper = {
     ajaxUrl: "/handler/HQ.ashx",
     loaclData: [],
-    type: hotUtil.getQuery("type"),
-    picDir: "bameng/focuspic/",
     pageIndex: 1,
     reset: null,
     switchery: null,
@@ -44,9 +42,13 @@ var couponHelper = {
                             tempHtml = tempHtml.replace("{NO}", (i + 1));
                             tempHtml = tempHtml.replace(/{CouponId}/gm, item.CouponId);
                             tempHtml = tempHtml.replace("{Title}", item.Title);
+                            tempHtml = tempHtml.replace("{BrandName}", item.BrandName);
                             tempHtml = tempHtml.replace("{Money}", item.Money);
+                            tempHtml = tempHtml.replace("{Amounts}", item.Amounts);
+                            tempHtml = tempHtml.replace("{RebateMoney}", item.RebateMoney);
                             tempHtml = tempHtml.replace("{StatusName}", "<span style='color:red;'>" + item.StatusName + "</span>");
-                            tempHtml = tempHtml.replace("{Time}", item.StartTime + " 至 " + item.EndTime);
+                            tempHtml = tempHtml.replace("{Time}", item.time);
+                            tempHtml = tempHtml.replace("{Remark}", item.Remark);
 
                             tempHtml = tempHtml.replace("{ActiveText}", item.IsEnable == 1 ? "禁用" : "启用");
                             listhtml += tempHtml;
@@ -64,6 +66,24 @@ var couponHelper = {
                 }
             }
             hotUtil.loading.close();
+        });
+    },
+    loadBrandList: function () {
+        var postData = {
+            action: "GetBrandList"
+        }
+        hotUtil.ajaxCall(this.ajaxUrl, postData, function (ret, err) {
+            if (ret) {
+                if (ret.status == 200) {
+                    if (ret.data) {
+                        var html = '<option value="0">请选择</option>';
+                        $.each(ret.data, function (i, item) {
+                            html += '<option value="' + item.BrandId + '">' + item.Title + '</option>';
+                        });
+                        $("#sltBrand").html(html);
+                    }
+                }
+            }
         });
     },
     search: function () {
@@ -91,6 +111,10 @@ var couponHelper = {
         var postData = hotUtil.serializeForm("#signupForm .form-control");
         postData.action = "EditCashCoupon";
         postData.couponenable = $("#couponenable").attr("checked") ? 1 : 0;
+        if ($("#sltBrand").val() == "0") {
+            swal("请选择品牌");
+            return false;
+        }
         hotUtil.loading.show();
         hotUtil.ajaxCall(self.ajaxUrl, postData, function (ret, err) {
             if (ret) {
@@ -123,7 +147,7 @@ var couponHelper = {
             hotUtil.ajaxCall(couponHelper.ajaxUrl, param, function (ret, err) {
                 if (ret) {
                     if (ret.status == 200) {
-                        swal("删除成功！", "您已经永久删除了这条信息。", "success");
+                        swal("删除成功", "您已经永久删除了这条信息。", "success");
                         couponHelper.loadList(couponHelper.pageIndex);
                     }
                     else {
@@ -144,7 +168,7 @@ var couponHelper = {
         hotUtil.ajaxCall(this.ajaxUrl, param, function (ret, err) {
             if (ret) {
                 if (ret.status == 200) {
-                    swal("设置成功！", "", "success");
+                    swal("设置成功", "", "success");
                     couponHelper.loadList(couponHelper.pageIndex);
                 }
                 else {
@@ -155,27 +179,32 @@ var couponHelper = {
         });
     },
     newTab: function (dataId) {
-        hotUtil.newTab("admin/coupongetlist.html?couponid=" + dataId, "现金券领取记录-" + dataId);
+        hotUtil.newTab("admin/coupongetlist.html?couponid=" + dataId, "现金券领取记录");
     },
     dialog: function (dataId) {
         if (this.reset)
             this.reset.resetForm();
         var data = this.getModel(dataId);
         if (data != null) {
-            $("#modal-title").text("编辑现金券");
+            $("#modal-title").text("编辑优惠券");
             $("#couponid").val(dataId);
             $("#coupontitle").val(data.Title);
             $("#couponmoney").val(data.Money);
+            $("#couponamount").val(data.Amounts);
+            $("#couponrebate").val(data.RebateMoney);
             $("#couponstarttime").val(data.StartTime);
             $("#couponendtime").val(data.EndTime);
             $("#couponenable").setChecked(data.IsEnable == 1);
+            $("#sltBrand").val(data.BrandId);
         }
         else {
-            $("#modal-title").text("添加现金券");
+            $("#modal-title").text("添加优惠券");
             $("#signupForm input").val("");
+            $("#sltBrand").val(0);
         }
     },
     pageInit: function () {
+        couponHelper.loadBrandList();
         couponHelper.loadList(couponHelper.pageIndex);
         couponHelper.validate();
         var elem = document.querySelector('.js-switch');
@@ -186,15 +215,43 @@ var couponHelper = {
         this.reset = $("#signupForm").validate({
             rules: {
                 coupontitle: "required",
-                couponmoney: "required",
+                couponmoney: {
+                    required: !0,
+                    number: true
+                },
+                couponamount: {
+                    required: !0,
+                    number: true
+                },
+                couponrebate: {
+                    required: !0,
+                    number: true
+                },
                 couponstarttime: "required",
-                couponendtime: "required"
+                couponendtime: "required",
+                couponremark: {
+                    maxlength:50
+                }
             },
             messages: {
                 coupontitle: e + "请输入标题",
-                couponmoney: e + "请上传图片",
+                couponmoney: {
+                    required: e + "请输入优惠券金额",
+                    number: e + "只允许输入数字"
+                },
+                couponamount: {
+                    required: e + "请输入优惠券数量",
+                    number: e + "只允许输入数字"
+                },
+                couponrebate: {
+                    required: e + "请输入优惠券返利",
+                    number: e + "只允许输入数字"
+                },
                 couponstarttime: e + "请输入开始时间",
-                couponendtime: e + "请输入结束时间"
+                couponendtime: e + "请输入结束时间",
+                couponremark: {
+                    maxlength: "最多50个字符"
+                }
             },
             submitHandler: function (form) {
                 couponHelper.edit();

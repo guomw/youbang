@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,6 +10,17 @@
     <RootNamespace>Web</RootNamespace>
     <AssemblyName>Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +38,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HotCoreUtils">
+      <HintPath>..\Lib\HotCoreUtils.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -41,7 +57,16 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="admin\coupongetlist2.html" />
+    <Content Include="admin\coupongetlist1.html" />
+    <Content Include="admin\rebatelist.html" />
+    <Content Include="admin\drawmoneylist.html" />
+    <Content Include="static\js\admin\rebatelist.js" />
+    <Content Include="static\js\admin\drawmoneylist.js" />
+    <Content Include="static\js\daterangepicker.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="home.html" />
     <Content Include="index.html" />
@@ -169,45 +194,16 @@
     <Content Include="static\img\wechat.jpg" />
     <Content Include="static\img\wenku_logo.png" />
     <Content Include="static\img\ydll%403x.png" />
-    <Content Include="static\js\admin\apparticle.js" />
-    <Content Include="static\js\admin\articleedit.js" />
-    <Content Include="static\js\admin\articlelist.js" />
-    <Content Include="static\js\admin\basesetting.js" />
     <Content Include="static\js\admin\cashcouponlist.js" />
-    <Content Include="static\js\admin\cashcouponstatic.js" />
-    <Content Include="static\js\admin\cashcouponstaticpie.js" />
     <Content Include="static\js\admin\coupongetlist.js" />
-    <Content Include="static\js\admin\customerlist.js" />
-    <Content Include="static\js\admin\customerstatistics.js" />
-    <Content Include="static\js\admin\focuspic.js" />
     <Content Include="static\js\admin\Home.js" />
     <Content Include="static\js\admin\Login.js" />
-    <Content Include="static\js\admin\loginstatistics.js" />
-    <Content Include="static\js\admin\managerlist.js" />
-    <Content Include="static\js\admin\messageedit.js" />
-    <Content Include="static\js\admin\messagelist.js" />
     <Content Include="static\js\admin\modifypassword.js" />
     <Content Include="static\js\admin\orderdetails.js" />
-    <Content Include="static\js\admin\orderlist.js" />
-    <Content Include="static\js\admin\orderstatic.js" />
-    <Content Include="static\js\admin\orderstaticpie.js" />
     <Content Include="static\js\admin\shareConfig.js" />
-    <Content Include="static\js\admin\shoplist.js" />
     <Content Include="static\js\admin\userdetails.js" />
-    <Content Include="static\js\admin\userlevel.js" />
+    <Content Include="static\js\admin\brandlist.js" />
     <Content Include="static\js\admin\userlist.js" />
-    <Content Include="static\js\demo\bootstrap-table-demo.min.js" />
-    <Content Include="static\js\demo\echarts-demo.min.js" />
-    <Content Include="static\js\demo\flot-demo.min.js" />
-    <Content Include="static\js\demo\form-advanced-demo.min.js" />
-    <Content Include="static\js\demo\form-validate-demo.min.js" />
-    <Content Include="static\js\demo\layer-demo.min.js" />
-    <Content Include="static\js\demo\morris-demo.min.js" />
-    <Content Include="static\js\demo\peity-demo.min.js" />
-    <Content Include="static\js\demo\rickshaw-demo.min.js" />
-    <Content Include="static\js\demo\sparkline-demo.min.js" />
-    <Content Include="static\js\demo\treeview-demo.min.js" />
-    <Content Include="static\js\demo\webuploader-demo.min.js" />
     <Content Include="static\js\plugins\beautifyhtml\beautifyhtml.js" />
     <Content Include="static\js\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="static\js\plugins\bootstrap-table\locale\bootstrap-table-zh-CN.min.js" />
@@ -440,50 +436,59 @@
     <Content Include="static\plugins\fullavatareditor\scripts\jQuery.Cookie.js" />
     <Content Include="static\plugins\fullavatareditor\scripts\swfobject.js" />
     <Content Include="static\plugins\fullavatareditor\scripts\test.js" />
-    <Content Include="admin\articleedit.html" />
-    <Content Include="admin\articlelist.html" />
-    <Content Include="admin\basesetting.html" />
     <Content Include="admin\cashcouponlist.html" />
-    <Content Include="admin\cashcouponstatic.html" />
-    <Content Include="admin\cashcouponstaticpie.html" />
     <Content Include="admin\coupongetlist.html" />
-    <Content Include="admin\customerareastatic.html" />
-    <Content Include="admin\customerlist.html" />
-    <Content Include="admin\customerstatic.html" />
-    <Content Include="admin\focuspic.html" />
-    <Content Include="admin\loginstatic.html" />
-    <Content Include="admin\managerlist.html" />
-    <Content Include="admin\messageedit.html" />
-    <Content Include="admin\messagelist.html" />
     <Content Include="admin\modifypassword.html" />
     <Content Include="admin\none.html" />
     <Content Include="admin\orderdetails.html" />
-    <Content Include="admin\orderlist.html" />
-    <Content Include="admin\orderstatic.html" />
-    <Content Include="admin\orderstaticpie.html" />
-    <Content Include="admin\shoplist.html" />
     <Content Include="admin\userdetails.html" />
-    <Content Include="admin\userlevel.html" />
+    <Content Include="admin\brandlist.html" />
     <Content Include="admin\userlist.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="handler\HQ.ashx.cs">
+      <DependentUpon>HQ.ashx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="handler\Login.ashx.cs">
+      <DependentUpon>Login.ashx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="handler\Logout.ashx.cs">
+      <DependentUpon>Logout.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="handler\HQ.ashx" />
+    <Content Include="handler\Login.ashx" />
+    <Content Include="handler\Logout.ashx" />
     <None Include="static\css\plugins\footable\fonts\footable.eot_" />
     <None Include="static\css\plugins\jqgrid\ui.jqgrid.css_0820" />
-    <None Include="static\css\.DS_Store" />
     <None Include="static\fonts\fontawesome-webfont.eot_" />
     <None Include="static\fonts\fontawesome-webfont.woff2" />
     <None Include="static\fonts\glyphicons-halflings-regular.eot_" />
     <None Include="static\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="static\js\plugins\jqgrid\i18n\grid.locale-cn.js_0820" />
     <None Include="static\js\plugins\jqgrid\jquery.jqGrid.min.js_0820" />
-    <None Include="static\js\.DS_Store" />
-    <None Include="admin\.DS_Store" />
+    <None Include="youadmin.pubxml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logic\Logic.csproj">
+      <Project>{251477A4-4CA7-495E-9A27-3B98B7E1AFB1}</Project>
+      <Name>Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{06CAEEB2-1CBF-4241-AE04-F41358C7EB26}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
@@ -491,5 +496,23 @@
         <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
+    <VisualStudio>
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:22955/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
 </Project>

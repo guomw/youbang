@@ -1,0 +1,34 @@
+2016/12/20 10:11:03,44 ERROR action:CouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppCashCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 187
+   在 Logic.UserLogic.GetAppCashCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 321
+   在 msite.handler.AjaxHandler.CouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 85
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 59 Message:拒绝了对对象 'CouponLog' (数据库 'hotyoubang'，架构 'dbo')的 SELECT 权限。
+2016/12/20 10:11:35,582 ERROR action:CouponList StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Action`1 callback, Boolean orderby) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 228
+   在 Logic.DAL.UserDAL.GetAppCashCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 187
+   在 Logic.UserLogic.GetAppCashCouponList(SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 321
+   在 msite.handler.AjaxHandler.CouponList() 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 85
+   在 msite.handler.AjaxHandler.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\msite\handler\AjaxHandler.ashx.cs:行号 59 Message:拒绝了对对象 'CouponLog' (数据库 'hotyoubang'，架构 'dbo')的 SELECT 权限。
