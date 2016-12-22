@@ -141,6 +141,7 @@
     <Content Include="OAuth2\WeixinAuthorize.aspx" />
     <Content Include="OAuth2\WeixinCallback.aspx" />
     <Content Include="rebatelist.aspx" />
+    <Content Include="scan.aspx" />
     <Content Include="turncouponlist.aspx" />
     <Content Include="usecoupondetail.aspx" />
     <Content Include="Web.config" />
@@ -263,6 +264,13 @@
     </Compile>
     <Compile Include="rebatelist.aspx.designer.cs">
       <DependentUpon>rebatelist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="scan.aspx.cs">
+      <DependentUpon>scan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="scan.aspx.designer.cs">
+      <DependentUpon>scan.aspx</DependentUpon>
     </Compile>
     <Compile Include="turncouponlist.aspx.cs">
       <DependentUpon>turncouponlist.aspx</DependentUpon>

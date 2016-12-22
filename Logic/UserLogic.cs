@@ -559,6 +559,8 @@ namespace Logic
         {
             using (TransactionScope scope = new TransactionScope())
             {
+                if (couponid == 0 || userid == 0 || currentuserid == 0)
+                    return false;
                 var couponInfo = dal.GetCouponDetailById(couponid);
                 if (couponInfo == null || couponInfo.Amounts <= 0)
                     return false;

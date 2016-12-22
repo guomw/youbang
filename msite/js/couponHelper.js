@@ -265,7 +265,7 @@ function onCouponGet() {
                 window.location.href = "error/200.html?note=" + hotUtil.encode("领取成功");
             }
             else
-                window.location.href = "error/200.html?note=" + hotUtil.encode("优惠券已领完");
+                $.alert(ret.statusText);// window.location.href = "error/200.html?note=" + hotUtil.encode("优惠券已领完");
         }
         else
             window.location.href = "error/200.html?note=" + hotUtil.encode("优惠券已领完");

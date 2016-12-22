@@ -174,11 +174,20 @@ namespace msite.handler
             string name = GetFormValue("name", "");
             string mobile = GetFormValue("mobile", "");
             string from = GetFormValue("from", "");
-            bool flag = UserLogic.Instance.onCouponGet(couponid, userid, currentuserid, name, mobile, from);
-            if (flag)
-                json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK));
+
+
+
+            var couponInfo = UserLogic.Instance.GetMyCouponModel(currentuserid, couponid);
+            if (couponInfo == null)
+            {
+                bool flag = UserLogic.Instance.onCouponGet(couponid, userid, currentuserid, name, mobile, from);
+                if (flag)
+                    json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK));
+                else
+                    json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.优惠券已领完));
+            }
             else
-                json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.优惠券已领完));
+                json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.优惠券已领完, "您已领取过了，无需重复领取"));
         }
 
 
