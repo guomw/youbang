@@ -67,6 +67,14 @@ var userHelper = {
                                 tempHtml = tempHtml.replace(/{display}/gm, "");
                             }
 
+
+                            if (item.UserIdentity > 0)
+                                tempHtml = tempHtml.replace("{LableText2}", item.UserIdentity == 1 ? "设置成店员" : "");
+                            else
+                                tempHtml = tempHtml.replace("{LableText2}", "");
+
+                            tempHtml = tempHtml.replace("{identity}", item.UserIdentity);
+
                             listhtml += tempHtml;
                         });
                         $("#listMode").html(listhtml);
@@ -108,6 +116,26 @@ var userHelper = {
         var param = {
             action: "UpdateUserActive",
             userid: dataId
+        }
+        hotUtil.loading.show();
+        hotUtil.ajaxCall(this.ajaxUrl, param, function (ret, err) {
+            if (ret) {
+                if (ret.status == 200) {
+                    swal("设置成功", "", "success");
+                    userHelper.loadList(userHelper.pageIndex);
+                }
+                else {
+                    swal(ret.statusText, "", "warning");
+                }
+            }
+            hotUtil.loading.close();
+        });
+    },
+    updateIdentity: function (dataId, identity) {
+        var param = {
+            action: "updateIdentity",
+            userid: dataId,
+            identity: identity
         }
         hotUtil.loading.show();
         hotUtil.ajaxCall(this.ajaxUrl, param, function (ret, err) {

@@ -24,6 +24,21 @@ namespace msite
 
         private void LoadData()
         {
+            //couponget.aspx
+            var userInfo = GetUserBaseInfo();
+            if (userInfo == null)
+            {
+                Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("用户信息丢失"));
+            }
+            else if (userInfo.IsActive == 0)
+            {
+                Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("账号已冻结，请联系管理员!"));
+            }
+            else if (userInfo.UserIdentity == 0 || userInfo.UserId != UserId)
+            {
+                Response.Redirect(string.Format("couponget.aspx?couponid={0}&userid={1}", CouponId, UserId));
+            }
+
             couponInfo = UserLogic.Instance.GetCouponDetailById(CouponId);
             if (couponInfo == null)
             {

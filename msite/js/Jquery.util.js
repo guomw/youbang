@@ -136,7 +136,7 @@ $.extend(hotUtil, {
     * @brief 判断字符是否为null或空或undefined
     */
     isNullOrEmpty: function (str) {
-        if (typeof str != 'undefined' && str != null && str.length > 0)
+        if (typeof str != 'undefined' && typeof str != 'null' && str != null && str.length > 0)
             return false;
         else
             return true;

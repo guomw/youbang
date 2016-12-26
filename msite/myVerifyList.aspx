@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="drawmoneylist.aspx.cs" Inherits="msite.drawmoneylist" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="myVerifyList.aspx.cs" Inherits="msite.myVerifyList" %>
 
 <!doctype html>
 <html>
@@ -12,21 +12,21 @@
     <link rel="stylesheet" type="text/css" href="http://resali.huobanplus.com/cdn/jquery-weui/0.8.2/weui.min.css">
     <link rel="stylesheet" type="text/css" href="http://resali.huobanplus.com/cdn/jquery-weui/0.8.2/jquery-weui.min.css">
     <link rel="stylesheet" type="text/css" href="css/ybdiy.css">
-    <title>提现明细</title>
+    <title>核销明细</title>
 </head>
 <body class="ddbg">
     <div class="sl-zdy">
         <ul class="sl-float-ul  pjf_1ge ">
             <li style="text-align: left; margin-left: 15px">
-                <p class="bm totalMoney">0.00</p>
-                <p class="sm">&nbsp;总共提现金额/元</p>
+                <p class="bm totalMoney">0</p>
+                <p class="sm">&nbsp;总共核销/单</p>
             </li>
         </ul>
     </div>
 
     <div class="p6t3 hot-pullToRefresh">
 
-        <div class="weui_cells_title">提现流水</div>
+        <div class="weui_cells_title">核销明细</div>
         <div class="tixianlist">
             <ul id="listMode">
                 <img src="images/klkl.jpg" style="width: 100%" />
@@ -36,11 +36,9 @@
     <script type="text/template" id="couponlistTemplate">
         <li>
             <div class="ao">
-                <div class="zh"><b>提现{ApplyMoney}元</b></div>
-                <div class="zhs">提现账户：{PayAccount}</div>
+                <div class="zh"><b>{CouponName}</b></div>
+                <div class="zhs">券号{CouponNo}</div>
                 <div class="time">{CreateTime}</div>
-                <div class="time">{Remark}</div>
-                <div class="zt">{ApplyStatusText}</div>
             </div>
         </li>
     </script>
@@ -53,11 +51,10 @@
 <script src="js/couponHelper.js"></script>
 <script>
     $(function () {
-        var m = '<%=TotalMoney%>';
-        $(".totalMoney").text(fmoney(m));
-        myDrawMoneyList(hotUtil.pageIndex);
+        $(".totalMoney").text('<%=TotalCount%>');
+        myVerifyList(hotUtil.pageIndex);
         $('.hot-pullToRefresh').on("pull-to-refresh", function () {
-            myDrawMoneyList(1);
+            myVerifyList(1);
         });
     });
 </script>

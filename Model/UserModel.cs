@@ -622,4 +622,16 @@ namespace Model
 
     }
 
+
+    public class VerifyCouponModel
+    {
+        public string CouponName { get; set; }
+
+        public string CouponNo { get; set; }
+
+        public string Time { get; set; }
+        [JsonIgnore()]
+        public DateTime UseTime { get; set; }
+    }
+
 }

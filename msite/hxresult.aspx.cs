@@ -76,12 +76,12 @@ namespace msite
 
         public int CouponId
         {
-            get { return this.GetQueryString("cid", 0); }
+            get { return this.GetQueryString("couponid", 0); }
         }
 
         public int UserId
         {
-            get { return this.GetQueryString("uid", 0); }
+            get { return this.GetQueryString("userid", 0); }
         }
     }
 }

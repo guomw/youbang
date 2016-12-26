@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="http://resali.huobanplus.com/cdn/jquery-weui/0.8.2/weui.min.css">
     <link rel="stylesheet" type="text/css" href="http://resali.huobanplus.com/cdn/jquery-weui/0.8.2/jquery-weui.min.css">
     <link rel="stylesheet" type="text/css" href="/css/ybdiy.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="JSDK/RegConfig.aspx?debug=0&apilist=closeWindow"></script>
     <title>结果</title>
 </head>
 <body class="ddbg">
@@ -18,14 +20,20 @@
         <div class="weui_icon_area"><i class="weui_icon_success weui_icon_msg"></i></div>
         <div class="weui_text_area">
             <h2 class="weui_msg_title">操作成功</h2>
-            <p class="weui_msg_desc">等待系统审核...1-3个工作日内完成.</p>
         </div>
         <div class="weui_opr_area">
             <p class="weui_btn_area">
 
-                <a href="javascript:window.history.back();" class="weui_btn weui_btn_default anniu">返回</a>
+                <a href="javascript:closeWindow();" class="weui_btn weui_btn_default anniu">关闭</a>
             </p>
         </div>
     </div>
 </body>
 </html>
+<script>
+    function closeWindow() {
+        wx.ready(function () {
+            wx.closeWindow();
+        });
+    }
+</script>

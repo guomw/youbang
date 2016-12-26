@@ -42,7 +42,7 @@
         <%if (userInfo.UserIdentity == 2)
             { %>
         <div class="weui_cells weui_cells_access">
-            <a class="weui_cell" href="javascript:void(0);">
+            <a class="weui_cell" href="myVerifyList.aspx?userid=<%=userInfo.UserId %>">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
                         <img src="images/icon/hexiao.png" class="w-icon">我的核销
@@ -78,13 +78,13 @@
             <div class="weui_tab_bd"></div>
         </div>
         <div class="weui_cells weui_cells_access">
-            <a class="weui_cell" href="rebatelist.aspx?userid=<%=userInfo.UserId %>&c=<%=userInfo.UserTotalMoney %>">
+            <a class="weui_cell" href="rebatelist.aspx?userid=<%=userInfo.UserId %>&c=<%=userInfo.UserMoney %>">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
                         <img src="images/icon/qian.png" class="w-icon">我的返利
                     </p>
                 </div>
-                <div class="weui_cell_ft" style="font-size: 12px"><%=userInfo.UserTotalMoney %>元</div>
+                <div class="weui_cell_ft" style="font-size: 12px">查看明细</div>
             </a>
         </div>
         <div class="weui_tab wdfl">

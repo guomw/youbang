@@ -121,6 +121,15 @@ namespace Web.handler
                     case "UPDATEDRAWMONEYSTATUS":
                         UpdateDrawMoneyStatus();
                         break;
+
+
+                    case "UPDATEIDENTITY":
+                        updateIdentity();
+                        break;
+
+                    case "MODIFYPASSWORD":
+                        modifyPassword();
+                        break;
                     default:
                         break;
                 }
@@ -353,5 +362,29 @@ namespace Web.handler
                 json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.SERVICEERROR));
         }
 
+
+
+
+        private void updateIdentity()
+        {
+            int userid = GetFormValue("userid", 0);
+            int active = GetFormValue("identity", 1);
+            var flag = UserLogic.Instance.SetUserIdentity(userid, active == 1 ? 2 : 1);
+
+            if (flag)
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
+            else
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.更新失败));
+        }
+
+        private void modifyPassword()
+        {
+            string oldpwd = GetFormValue("oldpwd", "");
+            string newpwd = GetFormValue("newpwd", "");
+            if (UserLogic.Instance.ChanagePassword(user.ID, oldpwd, newpwd))
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
+            else
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.旧密码不对));
+        }
     }
 }

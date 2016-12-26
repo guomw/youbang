@@ -61,13 +61,11 @@
 </html>
 <script src="http://resali.huobanplus.com/cdn/jquery/2.2.4/jquery.min.js"></script>
 <script src="http://resali.huobanplus.com/cdn/jquery-weui/0.8.2/jquery-weui.min.js"></script>
-<script src="js/fastclick.js"></script>
 <script src="/js/Jquery.util.js"></script>
 <script src="/js/pullToRefresh.js"></script>
 <script src="/js/couponHelper.js"></script>
 <script>
-    $(function () {
-        FastClick.attach(document.body);
+    $(function () {        
         usertype = "<%=UserType%>";
         userid = "<%=UserId%>";
         myCouponlist(hotUtil.pageIndex);

@@ -6,6 +6,7 @@ var tabtype = 0;
 var sign = "";
 var userid = hotUtil.getQuery("userid", 0);
 var couponid = hotUtil.getQuery("couponid", 0);
+var ctxUserId = 0;
 //下一页
 function nextPage(currentPageIndex, PageCount, callback) {
     if (currentPageIndex == 1) {
@@ -46,7 +47,8 @@ function couponlist(page) {
         action: "CouponList",
         pageIndex: page,
         pageSize: hotUtil.pageSize,
-        from: hotUtil.getQuery("from", "")
+        from: hotUtil.getQuery("fr", ""),
+        userid: ctxUserId
     }
     $.showLoading("正在加载...");
     var from = param.from;
@@ -58,7 +60,7 @@ function couponlist(page) {
                     $.each(ret.data.Rows, function (i, item) {
                         listhtml += $("#couponlistTemplate").html();
                         if (hotUtil.isNullOrEmpty(item.CouponNo)) {
-                            listhtml = listhtml.replace("{url}", "couponget.aspx?couponid=" + item.CouponId + "&userid=" + userid);
+                            listhtml = listhtml.replace("{url}", "couponget.aspx?fr=" + from + "&couponid=" + item.CouponId + "&userid=" + userid);
                             listhtml = listhtml.replace("{class}", "");
                             listhtml = listhtml.replace("{LabalText}", "立即领取");
                         }
@@ -254,7 +256,7 @@ function onCouponGet() {
         name: $("#txtname").val(),
         mobile: $("#txtmobile").val(),
         currentuserid: currentUserId,
-        from: hotUtil.getQuery("from", ""),
+        from: hotUtil.getQuery("fr", ""),
         sign: sign
     }
     $.showLoading("正在加载...");
@@ -301,10 +303,8 @@ function applyDistributor() {
                 window.location.href = "error/success.html";
             }
             else
-                window.location.href = "error/200.html?note=" + hotUtil.encode("优惠券已领完");
+                $.alert("申请失败");
         }
-        else
-            window.location.href = "error/200.html?note=" + hotUtil.encode("优惠券已领完");
     });
 }
 
@@ -467,6 +467,49 @@ function myDrawMoneyList(page) {
                             $("#listMode").append(listhtml);
                     }
                     nextPage(page, ret.data.PageCount, myDrawMoneyList);
+                    $.hideLoading();
+                }
+            }
+            else {
+                $.hideLoading();
+                $.alert(ret.statusText);
+                $('.hot-pullToRefresh').pullToRefreshDone();
+            }
+        }
+    });
+}
+
+
+
+
+//核销明细
+function myVerifyList(page) {
+    hotUtil.pageIndex = page;
+    var param = {
+        action: "VerifyList",
+        pageIndex: page,
+        pageSize: hotUtil.pageSize,
+        userid: userid
+    }
+    $.showLoading("正在加载...");
+    hotUtil.ajaxCall(hotUtil.ajaxUrl, param, function (ret, err) {
+        if (ret) {
+            if (ret.status == 200) {
+                if (ret.data) {
+                    var listhtml = "";
+                    $.each(ret.data.Rows, function (i, item) {
+                        listhtml += $("#couponlistTemplate").html();
+                        listhtml = listhtml.replace("{CouponName}", item.CouponName);
+                        listhtml = listhtml.replace("{CouponNo}", item.CouponNo);
+                        listhtml = listhtml.replace("{CreateTime}", item.Time);
+                    });
+                    if (!hotUtil.isNullOrEmpty(listhtml)) {
+                        if (page == 1)
+                            $("#listMode").html(listhtml);
+                        else
+                            $("#listMode").append(listhtml);
+                    }
+                    nextPage(page, ret.data.PageCount, myVerifyList);
                     $.hideLoading();
                 }
             }

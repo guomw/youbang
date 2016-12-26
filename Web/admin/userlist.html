@@ -99,7 +99,7 @@
             <td>{ActiveStatus}</td>            
             <td>{ApplyTime}</td>
             <td>              
-                                  
+                <span class="cursor-point" onclick="userHelper.updateIdentity('{UserId}','{identity}')">{LableText2}</span>
                 <span class="cursor-point" onclick="userHelper.updateActive('{UserId}')">{LableText}</span>
 
                 <span class="cursor-point" onclick="userHelper.dialog('{UserId}')"  data-toggle="modal" data-target="#myModal2">修改密码</span>

@@ -13,6 +13,20 @@
     <link rel="stylesheet" type="text/css" href="http://resali.huobanplus.com/cdn/jquery-weui/0.8.2/jquery-weui.min.css">
     <link rel="stylesheet" type="text/css" href="css/ybdiy.css">
     <title>返利明细</title>
+        <style>
+        .kong .kongshuju {
+            width: 100%;
+            display: block;
+        }
+
+        .kongshuju {
+            display: none;
+        }
+
+        .kong.weui_cells:after {
+            border-bottom: 0px;
+        }
+    </style>
 </head>
 <body class="ddbg">
     <div class="bd">
@@ -28,7 +42,8 @@
         <div class="p6t3 hot-pullToRefresh">
             <div class="weui_cells_title">返利明细</div>
 
-            <div class="weui_cells liushui" id="listMode">
+            <div class="weui_cells liushui kong" id="listMode">
+                <img src="images/klkl.jpg" class="kongshuju" />
             </div>
 
         </div>

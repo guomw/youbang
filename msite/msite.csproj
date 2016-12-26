@@ -113,10 +113,12 @@
     <Content Include="js\couponHelper.js" />
     <Content Include="js\fastclick.js" />
     <Content Include="js\jquery-qrcode-0.14.0.min.js" />
+    <Content Include="js\jquery-weui.js" />
     <Content Include="js\Jquery.util.js" />
     <Content Include="js\pullToRefresh.js" />
     <Content Include="myCouponGetList.aspx" />
     <Content Include="myCouponlist.aspx" />
+    <Content Include="myVerifyList.aspx" />
     <Content Include="packages.config" />
     <Content Include="handler\AjaxHandler.ashx" />
     <None Include="Properties\PublishProfiles\youb.pubxml" />
@@ -241,6 +243,13 @@
     </Compile>
     <Compile Include="myCouponlist.aspx.designer.cs">
       <DependentUpon>myCouponlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="myVerifyList.aspx.cs">
+      <DependentUpon>myVerifyList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="myVerifyList.aspx.designer.cs">
+      <DependentUpon>myVerifyList.aspx</DependentUpon>
     </Compile>
     <Compile Include="OAuth2\MPHelper.cs" />
     <Compile Include="OAuth2\WeixinAuthorize.aspx.cs">

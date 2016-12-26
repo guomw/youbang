@@ -19,7 +19,7 @@
 <body class="ddbg">
     <div style="padding-bottom: 24px;" class="hot-pullToRefresh">
         <div id="listMode">
-             <img src="images/klkl.jpg" style="width: 100%" />
+            <img src="images/klkl.jpg" style="width: 100%" />
         </div>
     </div>
     <script type="text/template" id="couponlistTemplate">
@@ -43,7 +43,6 @@
 </html>
 <script src="http://resali.huobanplus.com/cdn/jquery/2.2.4/jquery.min.js"></script>
 <script src="http://resali.huobanplus.com/cdn/jquery-weui/0.8.2/jquery-weui.min.js"></script>
-<script src="js/fastclick.js"></script>
 <script src="js/Jquery.util.js"></script>
 <script src="js/wxShare.js"></script>
 <script src="js/pullToRefresh.js"></script>
@@ -52,10 +51,10 @@
     wxShare.shareData.title = "测试分享标题";
     wxShare.shareData.desc = "测试分享详情";
     wxShare.shareData.img_url = "https://mp.weixin.qq.com/misc/getheadimg?token=712455382&fakeid=2390356254&r=358626";
-    wxShare.shareData.link = "http://" + window.location.host + "/turncouponlist.aspx?from=list&userid=" + userid;
+    wxShare.shareData.link = "http://" + window.location.host + "/turncouponlist.aspx?fr=list&userid=" + userid;
     wxShare.shareUserId = hotUtil.getQuery("userid", 0);
+    ctxUserId = '<%=userInfo.UserId%>';
     $(function () {
-        FastClick.attach(document.body);
         couponlist(hotUtil.pageIndex);
         $('.hot-pullToRefresh').on("pull-to-refresh", function () {
             couponlist(1);

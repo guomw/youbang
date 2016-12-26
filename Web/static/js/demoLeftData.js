@@ -95,7 +95,7 @@ function getDemoData() {
     });
     menuList.push({
         ItemCode: "1000306",
-        ItemNavLabel: "体现申请列表",
+        ItemNavLabel: "提现申请列表",
         ItemUrl: "admin/drawmoneylist.html",
         ItemParentCode: "10003",
         ItemShow: 1,

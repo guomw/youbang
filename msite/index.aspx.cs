@@ -56,7 +56,7 @@ namespace msite
             myCouponAmountInfo = UserLogic.Instance.GetMyCouponAmonut(userInfo.UserId);
 
             //我的返利总数
-            userInfo.UserTotalMoney = UserLogic.Instance.GetUserTotalRebate(userInfo.UserId);
+           // userInfo.UserTotalMoney = UserLogic.Instance.GetUserTotalRebate(userInfo.UserId);
 
             couponTotalAmount = UserLogic.Instance.GetAppCouponTotalCount();
         }

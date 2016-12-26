@@ -91,6 +91,6 @@
 
     //获取更多优惠券
     function onMoreCouponList() {
-        window.location.href = "turncouponlist.aspx?from=list&userid=" + userid;
+        window.location.href = "turncouponlist.aspx?fr=list&userid=" + userid;
     }
 </script>

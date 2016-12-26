@@ -38,7 +38,7 @@
                 </p>
                 <div style="margin-top: 10px; background-color: #f8f8f8; font-size: 12px; text-align: left; padding: 10px; border-radius: 10px; color: #999">
 
-                    <p>•&nbsp;可到实体店使用，由门店店员扫码二维码核对即可兑现优惠。</p>
+                    <p>•&nbsp;<%=couponInfo.Remark %></p>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
         $("#myQrCode").qrcode({
             render: "image",
             size: 150,
-            text: "http://" + window.location.host + "/hxresult.aspx?cid=" + couponid + "&uid=" + userid
+            text: "http://" + window.location.host + "/hxresult.aspx?couponid=" + couponid + "&userid=" + userid
         });
     });
 </script>

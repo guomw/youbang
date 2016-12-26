@@ -21,8 +21,8 @@ $(function () {
         + '</div>'
         + '<!--上拉刷新结束 -->';
     
-    $(".hot-pullToRefresh").children().first().before(pullTemplate);
+    //$(".hot-pullToRefresh").children().first().before(pullTemplate);
     $(".hot-pullToRefresh").children().last().after(moreTemplate);
-    $('.hot-pullToRefresh').pullToRefresh();
+    //$('.hot-pullToRefresh').pullToRefresh();
     $(".weui-infinite-scroll").hide();
 });

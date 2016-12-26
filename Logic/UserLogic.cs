@@ -120,6 +120,16 @@ namespace Logic
             return dal.SetUserApplyStatus(userId, status, remark);
         }
 
+        /// <summary>
+        /// 设置用户身份
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="identity">The identity.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool SetUserIdentity(int userId, int identity)
+        {
+            return dal.SetUserIdentity(userId, identity);
+        }
 
         public List<BrandModel> GetBrandList()
         {
@@ -344,9 +354,9 @@ namespace Logic
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>ResultPageModel.</returns>
-        public ResultPageModel GetAppCashCouponList(SearchModel model)
+        public ResultPageModel GetAppCashCouponList(SearchModel model, string from)
         {
-            return dal.GetAppCashCouponList(model);
+            return dal.GetAppCashCouponList(model, from);
         }
         /// <summary>
         /// 获取优惠券详情
@@ -546,6 +556,17 @@ namespace Logic
         }
 
         /// <summary>
+        /// 获取用户数量
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>System.Decimal.</returns>
+        public int GetUservVerifyCount(int userId)
+        {
+            return dal.GetUservVerifyCount(userId);
+        }
+
+
+        /// <summary>
         /// 领取优惠券
         /// </summary>
         /// <param name="couponid">The couponid.</param>
@@ -704,6 +725,25 @@ namespace Logic
                 return true;
             }
 
+        }
+
+
+        public ResultPageModel GetVerifyCouponList(SearchModel model)
+        {
+            return dal.GetVerifyList(model);
+        }
+
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="oldPassword">The old password.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool ChanagePassword(int userId, string oldPassword, string password)
+        {
+            return dal.ChanagePassword(userId, oldPassword, password);
         }
 
     }

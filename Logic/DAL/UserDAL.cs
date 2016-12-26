@@ -9,6 +9,7 @@
 
 
 using HotCoreUtils.DB;
+using HotCoreUtils.Helper;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -211,30 +212,44 @@ namespace Logic.DAL
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>ResultPageModel.</returns>
-        public ResultPageModel GetAppCashCouponList(SearchModel model)
+        public ResultPageModel GetAppCashCouponList(SearchModel model, string from)
         {
             ResultPageModel result = new ResultPageModel();
             if (model == null)
                 return result;
-            string strSql = @"select c.CouponId,c.Title,l.CouponNo,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts from CouponList c
+            string strSql = @"select c.CouponId,c.Title,'' as CouponNo,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts from CouponList c
                             left join CouponLog l on l.CouponId=c.CouponId and l.IsRecycle=0 
                             where c.IsDel=0  and c.IsEnable=1 
                             and CONVERT(nvarchar(10),c.StartTime,121)<=CONVERT(nvarchar(10),GETDATE(),121) 
                             and CONVERT(nvarchar(10),c.EndTime,121)>=CONVERT(nvarchar(10),GETDATE(),121) 
+                            group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney";
+
+            if (from=="list")
+            {
+                strSql = @"select c.CouponId,c.Title,ISNULL(l.CouponNo,'') as CouponNo,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts from CouponList c
+                            left join CouponLog l on l.CouponId=c.CouponId and l.IsRecycle=0 and l.UserId=@UserId
+                            where c.IsDel=0  and c.IsEnable=1 
+                            and CONVERT(nvarchar(10),c.StartTime,121)<=CONVERT(nvarchar(10),GETDATE(),121) 
+                            and CONVERT(nvarchar(10),c.EndTime,121)>=CONVERT(nvarchar(10),GETDATE(),121) 
                             group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney,l.CouponNo";
+            }
+
+            var param = new[] {
+                new SqlParameter("@UserId", model.UserId)
+            };
 
             //生成sql语句
-            return getPageData<AppCashCouponModel>(model.PageSize, model.PageIndex, strSql, "c.EndTime", ((items) =>
-             {
-                 items.ForEach((item) =>
-                 {
-                     item.time = item.StartTime.ToString("yyyy.MM.dd") + " 至 " + item.EndTime.ToString("yyyy.MM.dd");
-                     if (DateTime.Compare(item.EndTime.AddHours(24), DateTime.Now) > 0)
-                         item.expire = 0;
-                     else
-                         item.expire = 1;
-                 });
-             }));
+            return getPageData<AppCashCouponModel>(model.PageSize, model.PageIndex, strSql, "c.EndTime", param, ((items) =>
+              {
+                  items.ForEach((item) =>
+                  {
+                      item.time = item.StartTime.ToString("yyyy.MM.dd") + " 至 " + item.EndTime.ToString("yyyy.MM.dd");
+                      if (DateTime.Compare(item.EndTime.AddHours(24), DateTime.Now) > 0)
+                          item.expire = 0;
+                      else
+                          item.expire = 1;
+                  });
+              }));
         }
 
 
@@ -346,7 +361,7 @@ namespace Logic.DAL
              {
                  items.ForEach((item) =>
                  {
-                     item.time = item.GetTime.ToString("yyyy.MM.dd");
+                     item.time = item.GetTime.ToString("yyyy.MM.dd HH:mm:ss");
                      if (item.IsUse == 1)
                          item.StatusText = "已使用";
                      else if (item.IsRecycle == 1)
@@ -604,6 +619,23 @@ namespace Logic.DAL
             var param = new[] {
                 new SqlParameter("@ApplyStatus",status),
                 new SqlParameter("@Remark",remark),
+                new SqlParameter("@UserId",userId)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+        }
+
+
+        /// <summary>
+        /// 设置用户身份
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="identity">The identity.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool SetUserIdentity(int userId, int identity)
+        {
+            string strSql = "update UserList set UserIdentity=@UserIdentity  where UserId=@UserId";
+            var param = new[] {
+                new SqlParameter("@UserIdentity",identity),
                 new SqlParameter("@UserId",userId)
             };
             return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
@@ -1078,6 +1110,24 @@ namespace Logic.DAL
             };
             return Convert.ToDecimal(DbHelperSQLP.ExecuteScalar(WebConfig.getConnectionString(), CommandType.Text, strSql, param));
         }
+
+
+        /// <summary>
+        /// Gets the userv verify count.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>System.Decimal.</returns>
+        public int GetUservVerifyCount(int userId)
+        {
+            string strSql = "select COUNT(1) FROM CouponLog WHERE VerifyUserId=@userId";
+            var param = new[] {
+                new SqlParameter("@UserId",userId)
+            };
+            return Convert.ToInt32(DbHelperSQLP.ExecuteScalar(WebConfig.getConnectionString(), CommandType.Text, strSql, param));
+        }
+
+
+
         /// <summary>
         /// 获取提现数据实体
         /// </summary>
@@ -1167,6 +1217,48 @@ namespace Logic.DAL
             {
                 return DbHelperSQLP.GetEntity<UserBaseInfoModel>(dr);
             }
+        }
+
+
+        public ResultPageModel GetVerifyList(SearchModel model)
+        {
+            ResultPageModel result = new ResultPageModel();
+            if (model == null)
+                return result;
+            string strSql = @"select l.CouponNo,c.Title as CouponName,l.UseTime from CouponLog l
+                                left join CouponList c on c.CouponId=l.CouponId 
+                                where l.VerifyUserId=@UserId
+                                ";
+            var param = new[] {
+                new SqlParameter("@UserId", model.UserId)
+            };
+            //生成sql语句
+            return getPageData<VerifyCouponModel>(model.PageSize, model.PageIndex, strSql, "l.UseTime", param, (items =>
+            {
+                items.ForEach(item =>
+                {
+                    item.Time = item.UseTime.ToString("yyyy-MM-dd HH:mm:ss");
+                });
+            }));
+        }
+
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="oldPassword">The old password.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool ChanagePassword(int userId, string oldPassword, string password)
+        {
+            string strSql = "update Manager set LoginPassword=@NewLoginPassword where ID=@ID and LoginPassword=@OldLoginPassword";
+            SqlParameter[] param = {
+                new SqlParameter("@NewLoginPassword",EncryptHelper.MD5(password)),
+                new SqlParameter("@ID", userId),
+                new SqlParameter("@OldLoginPassword",EncryptHelper.MD5(oldPassword))
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
         }
 
     }

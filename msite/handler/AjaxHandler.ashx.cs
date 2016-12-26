@@ -85,6 +85,9 @@ namespace msite.handler
                     case "DRAWMONEYLIST":
                         DrawMoneyList();
                         break;
+                    case "VERIFYLIST":
+                        VerifyList();
+                        break;
                     default:
                         break;
                 }
@@ -108,9 +111,10 @@ namespace msite.handler
             {
                 PageIndex = GetFormValue("pageIndex", 1),
                 PageSize = GetFormValue("pageSize", 20),
+                UserId = GetFormValue("userid", 0)
             };
             string from = GetFormValue("from", "");
-            var data = UserLogic.Instance.GetAppCashCouponList(model);
+            var data = UserLogic.Instance.GetAppCashCouponList(model, from);
             json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK, data));
         }
 
@@ -156,7 +160,7 @@ namespace msite.handler
         {
             int couponid = GetFormValue("couponid", 0);
             int userid = GetFormValue("userid", 0);
-            if (userid > 0 && couponid != 0 && UserLogic.Instance.AddCouponShareLog(couponid, userid))
+            if (userid > 0 && couponid > 0 && UserLogic.Instance.AddCouponShareLog(couponid, userid))
                 json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK));
             else
                 json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.发送失败));
@@ -282,6 +286,19 @@ namespace msite.handler
                 UserId = GetFormValue("userid", 0)
             };
             var data = UserLogic.Instance.GetDrawMoneyList(model);
+            json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK, data));
+        }
+
+
+        private void VerifyList()
+        {
+            SearchModel model = new SearchModel()
+            {
+                PageIndex = GetFormValue("pageIndex", 1),
+                PageSize = GetFormValue("pageSize", 20),
+                UserId = GetFormValue("userid", 0)
+            };
+            var data = UserLogic.Instance.GetVerifyCouponList(model);
             json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK, data));
         }
     }
