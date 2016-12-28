@@ -89,6 +89,7 @@
     <Content Include="drawmoney.aspx" />
     <Content Include="drawmoneylist.aspx" />
     <Content Include="error\500.html" />
+    <Content Include="error\su.html" />
     <Content Include="error\success.html" />
     <Content Include="error\200.html" />
     <Content Include="hxresult.aspx" />

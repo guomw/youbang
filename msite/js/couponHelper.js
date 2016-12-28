@@ -366,7 +366,7 @@ function submitHx() {
         $.hideLoading();
         if (ret) {
             if (ret.status == 200) {
-                window.location.href = "error/success.html";
+                window.location.href = "error/su.html";
             }
             else
                 $.alert(ret.statusText);// window.location.href = "error/200.html?note=" + hotUtil.encode("优惠券已领完");
