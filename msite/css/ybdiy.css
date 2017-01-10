@@ -254,7 +254,7 @@ a.q-coupon_item {
     color: #fff;
 }
 .q-coupon_item .date {
-    padding-top: 15px;
+    padding-top: 7px;
     font-size: 16px;
     font-weight: 700
 }
@@ -291,6 +291,13 @@ a.q-coupon_item {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+.q-coupon_item .pingpai {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;text-overflow:ellipsis;	white-space:nowrap;overflow:hidden;display:inline-block; width: 90%
 }
 .q-coupon_item .q-count {
     position: absolute;
@@ -348,12 +355,12 @@ a.q-coupon_item {
  
 }
 .q-coupon_item.zhuanfa .date {
-    padding-top:15px;
+    padding-top:7px;
     font-size: 16px;
     font-weight: 700;
 }
 .zhuanfa .dsfe{ color:#FF5730}
-.q-coupon_item.zhuanfa .name{ display:block}
+.q-coupon_item.zhuanfa .name{ display:block; line-height: 11px}
 
 .q-coupon_item.zhuanfa .id{ display:none}
 
@@ -369,12 +376,12 @@ a.q-coupon_item {
  
 }
 .q-coupon_item.wd .date {
-    padding-top:15px;
+    padding-top:7px;
     font-size: 16px;
     font-weight: 700;
 }
 .wd .dsfe{ color:#57B700}
-.q-coupon_item.wd .names{ display:block}
+.q-coupon_item.wd .names{ display:block; line-height: 11px}
 
 .q-coupon_item.wd .id{ display:none}
 
@@ -391,18 +398,8 @@ a.q-coupon_item {
 
 .lqkk .q-card_content_pane .zhuanfa .ids,.lqkk .q-card_content_pane .zhuanfa .wd{ display:none}
 
-.weui_masks.hghg{
-    background: rgba(0,0,0,.8);
-    z-index:-1;    
-    opacity: 0;
-    -webkit-transition-duration: .3s;
-    transition-duration: .3s;
-    visibility: hidden;
-    position: fixed;    
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+.weui_mask.hghg{
+    background: rgba(0,0,0,.8);z-index:-1
 } 
 
 .hjkf .q-coupon_item:before,.hjkf .q-coupon_item:after {
@@ -453,4 +450,41 @@ a.q-coupon_item {
     height: 68px!important;
     z-index: 20001;
 }
-  
+
+
+
+.weui_cells.mdd .weui_cell{padding: 14px 15px;}
+
+/*20170109*/
+.msg {
+    color: #666;
+    font-size: 12px;
+    line-height: 2em;
+    padding: 0 10px;
+    background-color: #f5f5f5;
+}.list {
+    margin: 20px 0 10px 10px;
+    padding: 0;
+    position: relative;
+}.list li {
+    display: inline-block;
+    margin-bottom: 10px;
+    -webkit-animation: zoomIn 300ms ease;
+}
+.list li a {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 0 6px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 28px;
+    display: block;   
+    padding: 2px 14px;
+    color: #111;
+}
+.list li.fixed a {
+    background-color: #FF4949;
+    border: 1px solid #FF4949;   
+    color: #fff;
+    padding: 2px 14px;
+}

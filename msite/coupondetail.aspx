@@ -33,6 +33,7 @@
                 <a class="q-coupon_item zhuanfa">
                     <p class="date"><%=couponInfo.Title %></p>
                     <p class="time" title=""><%=couponInfo.time %></p>
+                    <p class="pingpai" title=""><span><%=couponInfo.BrandName %></span><span>【<%=couponInfo.GoodsName %>】</span></p>
                     <p class="name" title="">剩余<%=couponInfo.Amounts %>张</p>
                     <div class="q-count">
                         <em>¥</em><%=couponInfo.Money.ToString("f2").Split('.')[0] %>.<span><%=couponInfo.Money.ToString("f2").Split('.')[1] %></span>

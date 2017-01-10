@@ -149,5 +149,12 @@ namespace Model
 
         [Description("优惠券已领完")]
         优惠券已领完 = 75004,
+
+        [Description("优惠券数量不够")]
+        优惠券数量不够 = 75005,
+
+        [Description("请选择门店")]
+        请选择门店 = 75006,
+
     }
 }

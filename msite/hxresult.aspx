@@ -26,6 +26,7 @@
                 <p><%=couponInfo.Title %></p>
                 <p>使用期限</p>
                 <p><%=couponInfo.time %></p>
+                <p><%=couponInfo.BrandName %>【<%=couponInfo.GoodsName %>】</p>
             </div>
         </div>
         <%if (couponType == 200)

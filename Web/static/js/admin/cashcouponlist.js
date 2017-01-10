@@ -56,7 +56,7 @@ var couponHelper = {
                         $("#listMode").html(listhtml);
 
                         //初始化分页
-                        var pageinate = new hotUtil.paging(".pagination", ret.data.PageIndex, ret.data.PageSize, ret.data.PageCount, ret.data.Total, 7);
+                        var pageinate = new hotUtil.paging(".pagination1", ret.data.PageIndex, ret.data.PageSize, ret.data.PageCount, ret.data.Total, 7);
                         pageinate.init(function (p) {
                             goTo(p, function (page) {
                                 couponHelper.loadList(page);
@@ -78,9 +78,39 @@ var couponHelper = {
                     if (ret.data) {
                         var html = '<option value="0">请选择</option>';
                         $.each(ret.data, function (i, item) {
-                            html += '<option value="' + item.BrandId + '">' + item.Title + '</option>';
+                            html += '<option value="' + item.BrandId + '" >' + item.Title + '</option>';
                         });
                         $("#sltBrand").html(html);
+                    }
+                }
+            }
+        });
+    },
+    loadGoodsList: function (brandId) {
+        var postData = {
+            action: "GetGoodsListByBrandId",
+            brandId: brandId
+        }
+        hotUtil.ajaxCall(this.ajaxUrl, postData, function (ret, err) {
+            if (ret) {
+                if (ret.status == 200) {
+                    if (ret.data) {
+                        var html = '';
+                        var v = "|" + couponHelper.goodsvals + "|";
+                        $.each(ret.data, function (i, item) {
+                            if (v.indexOf("|" + item.GoodsId + "|") >= 0) {
+                                html += '<option value="' + item.GoodsId + '"  hassubinfo="true" selected>' + item.GoodsName + '</option>';
+                                couponHelper.goodsids.push({
+                                    goodsId: item.GoodsId.toString(),
+                                    text: item.GoodsName
+                                });
+                            }
+                            else {
+                                html += '<option value="' + item.GoodsId + '"  hassubinfo="true">' + item.GoodsName + '</option>';
+                            }
+                        });
+                        $("#sltGoods").html(html);
+                        for (var selector in couponHelper.config) $(selector).trigger("chosen:updated");
                     }
                 }
             }
@@ -115,6 +145,29 @@ var couponHelper = {
             swal("请选择品牌");
             return false;
         }
+
+        if (hotUtil.isNullOrEmpty(this.chkvals)) {
+            swal("请关联门店");
+            return false;
+        }
+        postData.shopids = this.chkvals;
+        //if (hotUtil.isNullOrEmpty(this.goodsvals)) {
+        //    this.goodsvals = "";
+        //    $(".search-choice span").each(function () {
+        //        var text = $(this).text();
+        //        $.each(couponHelper.goodsids, function (i, item) {
+        //            if (item.text == text) {
+        //                couponHelper.goodsvals += item.goodsId.toString() + "|";
+        //            }
+        //        });
+        //    });
+        //}
+        if (hotUtil.isNullOrEmpty(this.goodsvals)) {
+            swal("请选择关联商品");
+            return false;
+        }
+
+        postData.goodsids = this.goodsvals.toString().replace(/,/gm, "|");
         hotUtil.loading.show();
         hotUtil.ajaxCall(self.ajaxUrl, postData, function (ret, err) {
             if (ret) {
@@ -196,11 +249,44 @@ var couponHelper = {
             $("#couponendtime").val(data.EndTime);
             $("#couponenable").setChecked(data.IsEnable == 1);
             $("#sltBrand").val(data.BrandId);
+            $("#couponremark").val(data.Remark);
+
+
+            couponHelper.chkvals = data.ShopIds;
+            couponHelper.goodsvals = data.GoodsIds;
+            couponHelper.loadGoodsList(data.BrandId);
+
+            if (!hotUtil.isNullOrEmpty(couponHelper.chkvals)) {
+                $("#sltBrand").attr("disabled", "disabled");
+                $("#shopSelect,#shopAll").hide();
+            }
+            else {
+                $("#sltBrand").removeAttr("disabled");
+                $("#shopSelect,#shopAll").show();
+                $("#shopSelect").text("关联门店");
+                $("#shopAll").text("全部关联");
+            }
+            if (!hotUtil.isNullOrEmpty(couponHelper.goodsvals)) {
+                $("#sltGoods").attr("disabled", "disabled");
+            }
+            else {
+                $("#sltGoods").removeAttr("disabled");
+            }
+
         }
         else {
             $("#modal-title").text("添加优惠券");
             $("#signupForm input").val("");
             $("#sltBrand").val(0);
+            couponHelper.chkvals = "";
+            couponHelper.goodsvals = "";
+            couponHelper.goodsids = [];
+            $("#sltBrand").removeAttr("disabled");
+            $("#sltGoods").removeAttr("disabled");
+            $("#shopSelect,#shopAll").show();
+            $("#shopSelect").text("关联门店");
+            $("#shopAll").text("全部关联");
+
         }
     },
     pageInit: function () {
@@ -230,7 +316,7 @@ var couponHelper = {
                 couponstarttime: "required",
                 couponendtime: "required",
                 couponremark: {
-                    maxlength:50
+                    maxlength: 50
                 }
             },
             messages: {
@@ -257,6 +343,92 @@ var couponHelper = {
                 couponHelper.edit();
             }
         })
+    },
+    chkvals: "",
+    goodsids: [],
+    goodsvals: "",
+    loadShopList: function (page) {
+        var self = this;
+        var postData = {
+            action: "getshoplist",
+            pageIndex: page,
+            pageSize: 8,
+            key: "",
+            brandid: $("#sltBrand").val()
+        }
+        if (parseInt(postData.brandid) <= 0)
+            return false;
+        hotUtil.loading.show();
+        hotUtil.ajaxCall(this.ajaxUrl, postData, function (ret, err) {
+            if (ret) {
+                if (ret.status == 200) {
+                    if (ret.data) {
+                        var listhtml = "";
+                        $.each(ret.data.Rows, function (i, item) {
+                            var tempHtml = $("#templist_shop").html();
+                            tempHtml = tempHtml.replace("{chbname}", "chkshopid");
+                            tempHtml = tempHtml.replace("{shopName}", item.ShopName);
+                            if (hotUtil.isNullOrEmpty(couponHelper.chkvals))
+                                tempHtml = tempHtml.replace("{checked}", "");
+                            else {
+                                if (couponHelper.chkvals.indexOf("|" + item.ShopID + "|") >= 0)
+                                    tempHtml = tempHtml.replace("{checked}", "checked");
+                                else
+                                    tempHtml = tempHtml.replace("{checked}", "");
+                            }
+                            tempHtml = tempHtml.replace(/{shopId}/gm, item.ShopID);
+                            listhtml += tempHtml;
+                        });
+                        $("#listMode2").html(listhtml);
+
+                        //初始化分页
+                        var pageinate = new hotUtil.paging(".pagination2", ret.data.PageIndex, ret.data.PageSize, ret.data.PageCount, ret.data.Total, 7);
+                        pageinate.init(function (p) {
+                            goTo(p, function (page) {
+                                couponHelper.loadShopList(page);
+                            });
+                        });
+                    }
+                }
+            }
+            hotUtil.loading.close();
+        });
+    },
+    closeShopModal: function () {
+        couponHelper.chkvals = "|";
+        $("#shopAll").text("全部关联");
+        $("input[name='chkshopid']").each(function (i) {
+            if (this.checked) {
+                couponHelper.chkvals += $(this).val() + "|";
+            }
+        });
+        if (hotUtil.isNullOrEmpty(couponHelper.chkvals))
+            return false;
+
+        $("#shopSelect").text("已选择");
+        //关闭窗口
+        $(".closeShopModal").click();
+    },
+    setAll: function () {
+        this.chkvals = "-100";//
+        $("#shopAll").text("已选择");
+        $("#shopSelect").text("关联门店");
+
+    },
+    config: {
+        ".chosen-select": {},
+        ".chosen-select-deselect": {
+            allow_single_deselect: !0
+        },
+        ".chosen-select-no-single": {
+            disable_search_threshold: 10
+        },
+        ".chosen-select-no-results": {
+            no_results_text: "Oops, nothing found!"
+        },
+        ".chosen-select-width": {
+            width: "95%"
+        }
     }
 };
 
@@ -271,6 +443,36 @@ $(function () {
         else
             $(this).setChecked(true);
     });
+
+    $("#sltBrand").change(function () {
+        couponHelper.chkvals = "";
+        couponHelper.loadGoodsList($(this).val());
+    });
+    for (var selector in couponHelper.config) $(selector).chosen(couponHelper.config[selector]);
+
+
+    $("#sltGoods").change(function () {
+        if (!hotUtil.isNullOrEmpty($(this).val())) {
+            //var isExist = false;
+            //var self = this;
+            //$.each(couponHelper.goodsids, function (i, item) {
+            //    if (item.goodsId == $(self).val().toString()) {
+            //        isExist = true;
+            //        return true;
+            //    }
+            //});
+            //if (!isExist) {
+            //    couponHelper.goodsids.push({
+            //        goodsId: $(this).val().toString(),
+            //        text: $(this).text()
+            //    });
+            //}
+            couponHelper.goodsvals = $(this).val();
+        }
+        else
+            couponHelper.goodsvals = "";
+    });
+
 });
 
 

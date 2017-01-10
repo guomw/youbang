@@ -55,7 +55,7 @@ function getIEVersion() {
     return e;
 }
 $.fn.OnlyNum = function () {//文本框只允许输入数字，使用：$('.OnlyNum').OnlyNum()
-    $(this).on("keydown",function (e) {
+    $(this).on("keydown", function (e) {
         if (e.ctrlKey) return !0;
         var t = t || window.event,
         n = t.charCode || t.keyCode;
@@ -139,7 +139,7 @@ $.extend(hotUtil, {
     * @brief 判断字符是否为null或空或undefined
     */
     isNullOrEmpty: function (str) {
-        if (typeof str != 'undefined' && str != null && str.length > 0)
+        if (typeof str != 'undefined' && str != null && str.length > 0 && str != "")
             return false;
         else
             return true;

@@ -50,8 +50,8 @@
 <script>
     wxShare.shareData.title = "测试分享标题";
     wxShare.shareData.desc = "测试分享详情";
-    wxShare.shareData.img_url = "https://mp.weixin.qq.com/misc/getheadimg?token=712455382&fakeid=2390356254&r=358626";
-    wxShare.shareData.link = "http://" + window.location.host + "/turncouponlist.aspx?fr=list&userid=" + userid;
+    wxShare.shareData.img_url = "https://mp.weixin.qq.com/misc/getheadimg?token=712455382&fakeid=2390356254&r=358626";    
+    wxShare.shareData.link = "http://" + window.location.host + "/turncouponlist.aspx?fr=list&userid=" + userid + "&bid=" + brandId + "&gid=" + goodsId;
     wxShare.shareUserId = hotUtil.getQuery("userid", 0);
     ctxUserId = '<%=userInfo.UserId%>';
     $(function () {

@@ -28,7 +28,10 @@ var couponHelper = {
             searchType:$("#sltStatus").val(),
             startTime: $("#beginTime").val(),
             endTime: $("#endTime").val(),
-            couponId: this.couponId
+            couponId: this.couponId,
+            usermobile: $("#usermobile").val(),
+            username: $("#username").val(),
+            shopname: $("#shopname").val()
         }
         hotUtil.loading.show();
         hotUtil.ajaxCall(this.ajaxUrl, postData, function (ret, err) {
@@ -53,6 +56,19 @@ var couponHelper = {
                                 tempHtml = tempHtml.replace("{UseStatusName}", "未核销");
                                 tempHtml = tempHtml.replace("{UseTime}", "--/--");
                             }
+
+
+
+
+                            tempHtml = tempHtml.replace("{CouponName}", item.CouponName);
+                            tempHtml = tempHtml.replace("{RebateMoney}", item.RebateMoney);
+                            tempHtml = tempHtml.replace("{RealName}", item.RealName);
+                            tempHtml = tempHtml.replace("{UserMobile}", item.UserMobile);
+                            tempHtml = tempHtml.replace("{BrandName}", item.BrandName);
+                            tempHtml = tempHtml.replace("{ShopName}", item.ShopName);
+                            tempHtml = tempHtml.replace("{Name}", item.Name);
+
+
 
 
                             listhtml += tempHtml;

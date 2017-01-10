@@ -269,5 +269,19 @@ namespace Model
         /// <value>true if desc; otherwise, false.</value>
         public bool IsDesc { get; set; }
 
+
+        public string shopname { get; set; }
+
+        public string mobile { get; set; }
+
+        public string name { get; set; }
+
+
+
+
+        public int brandId { get; set; }
+
+        public int goodsId { get; set; }
+
     }
 }

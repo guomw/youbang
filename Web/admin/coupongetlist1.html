@@ -15,7 +15,7 @@
     <base target="_blank">
 </head>
 <body class="gray-bg">
-
+    <input type="hidden" value="1" id="sltStatus" />
     <div class="wrapper wrapper-content animated fadeInRight tooltip-demo">
         <!--search-->
         <form role="form" class="search-panel">
@@ -24,12 +24,27 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-content p-m no-borders">
                             <div class="form-inline">
+
                                 <div class="form-group m-r-sm">
-                                    <label class="control-label" for="goodName">手机号码：</label>
+                                    <label class="control-label" for="goodName">编码：</label>
                                     <input type="text" class="form-control input-sm mb10" id="keyword" name="keyword" placeholder="" />
-                                    <input type="hidden" value="1" id="sltStatus" />
+                                </div>
+                                <div class="form-group m-r-sm">
+                                    <label class="control-label" for="goodName">手机：</label>
+                                    <input type="text" class="form-control input-sm mb10" id="usermobile" name="usermobile" placeholder="" />
                                 </div>
 
+                                <div class="form-group m-r-sm">
+                                    <label class="control-label" for="goodName">分销商：</label>
+                                    <input type="text" class="form-control input-sm mb10" id="username" name="username" placeholder="" />
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="form-inline">
+                                <div class="form-group m-r-sm">
+                                    <label class="control-label" for="goodName">门店名称：</label>
+                                    <input type="text" class="form-control input-sm mb10" id="shopname" name="username" placeholder="" />
+                                </div>
                                 <div class="form-group m-r-sm">
                                     <label class="control-label" for="goodBn">核销时间：</label>
                                     <input type="text" class="form-control input-sm mb10 data-range-pick" id="createTimePick" name="createTimePick" start-element="#beginTime" end-element="#endTime" placeholder="开始时间-结束时间" style="width: 277px;" />
@@ -38,7 +53,7 @@
                                 </div>
                             </div>
                             <p style="height: 8px;"></p>
-                            <div class="form-inline" style="max-width: 926px; text-align: right;">
+                            <div class="form-inline" style="max-width: 926px;">
                                 <button type="button" onclick="couponHelper.search()" class="btn btn-success">筛选</button>
                                 <button type="button" onclick="couponHelper.searchAll()" class="btn btn-success">显示全部</button>
                             </div>
@@ -54,16 +69,20 @@
                 <div class="ibox float-e-margins m-b-none">
                     <div class="ibox-content p-xxs no-top-border">
                         <div class="panel-body">
-                            <div style="text-align:right;">
-                                <button type="button" id="btnUser" class="btn btn-w-m btn-success" onclick="couponHelper.newTab()">返回现金券列表</button>
+                            <div style="text-align:right;">                               
                             </div>
                             <table class="table table-bordered table-hover table-center">
                                 <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>现金券编码</th>
+                                        <th>编码</th>
+                                        <th>优惠券</th>
                                         <th>领取电话</th>
-                                        <th>有效期</th>            
+                                        <th>领取人</th>
+                                        <th>所属门店</th>
+                                        <th>分销商</th>    
+                                        <th>返利</th>                                    
+                                        <th>有效期</th>
                                         <th>核销时间</th>
                                     </tr>
                                 </thead>
@@ -82,7 +101,12 @@
         <tr>
             <td>{NO}</td>
             <td>{CouponNo}</td>
+            <td>{CouponName}</td>
             <td>{Mobile}</td>
+            <td>{Name}</td>
+            <td>{ShopName}</td>
+            <td>{RealName}</td>
+            <td>{RebateMoney}</td>
             <td>{Time}</td>
             <td>{UseTime}</td>
         </tr>

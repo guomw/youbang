@@ -53,6 +53,7 @@
     <Compile Include="Config\WebConfig.cs" />
     <Compile Include="OAuthModel.cs" />
     <Compile Include="ResultModel.cs" />
+    <Compile Include="ShopModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

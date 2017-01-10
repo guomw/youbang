@@ -28,7 +28,9 @@ var userHelper = {
             key: $("#keyword").val(),
             applystatus: self.isAlly == 2 ? 0 : 1,
             startTime: $("#beginTime").val(),
-            endTime: $("#endTime").val()
+            endTime: $("#endTime").val(),
+            shopname: $("#shopname").val(),
+            usermobile: $("#usermobile").val()
         }
         hotUtil.loading.show();
         hotUtil.ajaxCall(this.ajaxUrl, postData, function (ret, err) {
@@ -45,6 +47,7 @@ var userHelper = {
                             tempHtml = tempHtml.replace("{RealName}", item.RealName);
                             tempHtml = tempHtml.replace("{LevelName}", item.UserIdentity == 2 ? "店员" : "分销商");
                             tempHtml = tempHtml.replace("{Mobile}", item.Mobile);
+                            tempHtml = tempHtml.replace("{ShopName}", item.ShopName);
                             if (!hotUtil.isNullOrEmpty(item.HeadImg))
                                 tempHtml = tempHtml.replace("{UserHeadImg}", item.HeadImg);
                             else
@@ -78,10 +81,12 @@ var userHelper = {
                             listhtml += tempHtml;
                         });
                         $("#listMode").html(listhtml);
-                        if (self.isAlly == 2)
+                        if (self.isAlly == 2) {
                             $(".applyHtml").show();
+                            $(".applyOk").hide();
+                        }
                         //初始化分页
-                        var pageinate = new hotUtil.paging(".pagination", ret.data.PageIndex, ret.data.PageSize, ret.data.PageCount, ret.data.Total, 7);
+                        var pageinate = new hotUtil.paging(".pagination1", ret.data.PageIndex, ret.data.PageSize, ret.data.PageCount, ret.data.Total, 7);
                         pageinate.init(function () {
                             goTo(p, function (page) {
                                 userHelper.loadList(page);
@@ -97,7 +102,7 @@ var userHelper = {
         userHelper.loadList(1);
     },
     searchAll: function () {
-        $("#keyword,#beginTime,#endTime,#createTimePick").val("");
+        $("#keyword,#beginTime,#endTime,#createTimePick,#usermobile,#shopname").val("");
         userHelper.loadList(1);
     },
     getModel: function (dataId) {
@@ -111,6 +116,81 @@ var userHelper = {
             });
         }
         return model;
+    },
+    SelectedUserId: 0,
+    setShop: function (dataId) {
+        this.SelectedUserId = dataId;
+        this.loadShopList(1);
+    },
+    closeShopModal: function () {
+        var shopId = 0;
+        $("input[name='rdshopid']").each(function (i) {
+            if (this.checked) {
+                shopId = $(this).val();
+                return false;
+            }
+        });
+        if (hotUtil.isNullOrEmpty(shopId))
+            return false;
+
+
+        var param = {
+            action: "setShopId",
+            userid: this.SelectedUserId,
+            shopid: shopId
+        }
+        hotUtil.loading.show();
+        hotUtil.ajaxCall(this.ajaxUrl, param, function (ret, err) {
+            if (ret) {
+                if (ret.status == 200) {
+                    swal("设置成功", "", "success");
+                    userHelper.loadList(userHelper.pageIndex);
+                }
+                else {
+                    swal(ret.statusText, "", "warning");
+                }
+            }
+            hotUtil.loading.close();
+        });
+        //关闭窗口
+        $(".closeShopModal").click();
+    },
+    loadShopList: function (page) {
+        var self = this;
+        var postData = {
+            action: "getshoplist",
+            pageIndex: page,
+            pageSize: 8,
+            key: "",
+            brandid: 0
+        }
+        hotUtil.loading.show();
+        hotUtil.ajaxCall(this.ajaxUrl, postData, function (ret, err) {
+            if (ret) {
+                if (ret.status == 200) {
+                    if (ret.data) {
+                        var listhtml = "";
+                        $.each(ret.data.Rows, function (i, item) {
+                            var tempHtml = $("#templist_shop").html();
+                            tempHtml = tempHtml.replace("{chbname}", "rdshopid");
+                            tempHtml = tempHtml.replace("{shopName}", item.ShopName);
+                            tempHtml = tempHtml.replace(/{shopId}/gm, item.ShopID);
+                            listhtml += tempHtml;
+                        });
+                        $("#listMode2").html(listhtml);
+
+                        //初始化分页
+                        var pageinate = new hotUtil.paging(".pagination2", ret.data.PageIndex, ret.data.PageSize, ret.data.PageCount, ret.data.Total, 7);
+                        pageinate.init(function (p) {
+                            goTo(p, function (page) {
+                                userHelper.loadShopList(page);
+                            });
+                        });
+                    }
+                }
+            }
+            hotUtil.loading.close();
+        });
     },
     updateActive: function (dataId) {
         var param = {
@@ -211,8 +291,10 @@ var userHelper = {
         });
     },
     pageInit: function () {
-        if (this.isAlly == 2)
+        if (this.isAlly == 2) {
             $(".applyHtml").show();
+            $(".applyOk").hide();
+        }
         userHelper.loadList(userHelper.pageIndex);
         userHelper.validate();
     },

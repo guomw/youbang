@@ -61,8 +61,12 @@
     <Content Include="admin\coupongetlist1.html" />
     <Content Include="admin\rebatelist.html" />
     <Content Include="admin\drawmoneylist.html" />
+    <Content Include="admin\goodslist.html" />
+    <Content Include="admin\shoplist.html" />
     <Content Include="static\js\admin\rebatelist.js" />
     <Content Include="static\js\admin\drawmoneylist.js" />
+    <Content Include="static\js\admin\goodslist.js" />
+    <Content Include="static\js\admin\shoplist.js" />
     <Content Include="static\js\daterangepicker.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

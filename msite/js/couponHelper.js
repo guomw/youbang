@@ -7,6 +7,10 @@ var sign = "";
 var userid = hotUtil.getQuery("userid", 0);
 var couponid = hotUtil.getQuery("couponid", 0);
 var ctxUserId = 0;
+
+var brandId = hotUtil.getQuery("bid", 0), goodsId = hotUtil.getQuery("gid", 0);
+
+
 //下一页
 function nextPage(currentPageIndex, PageCount, callback) {
     if (currentPageIndex == 1) {
@@ -48,7 +52,10 @@ function couponlist(page) {
         pageIndex: page,
         pageSize: hotUtil.pageSize,
         from: hotUtil.getQuery("fr", ""),
-        userid: ctxUserId
+        userid: ctxUserId,
+        shopid: hotUtil.getQuery("shopid", 0),
+        brandid: brandId,
+        goodsid: goodsId
     }
     $.showLoading("正在加载...");
     var from = param.from;
@@ -65,15 +72,21 @@ function couponlist(page) {
                             listhtml = listhtml.replace("{LabalText}", "立即领取");
                         }
                         else {
-                            listhtml = listhtml.replace("{url}", "usecoupondetail.aspx?couponid=" + item.CouponId + "&userid=" + userid);
+                            //listhtml = listhtml.replace("{url}", "usecoupondetail.aspx?couponid=" + item.CouponId + "&userid=" + userid);
+                            listhtml = listhtml.replace("{url}", "couponget.aspx?couponid=" + item.CouponId + "&userid=" + userid);
                             listhtml = listhtml.replace("{class}", "linguo");
-                            listhtml = listhtml.replace("{LabalText}", "立即使用");
+                            listhtml = listhtml.replace("{LabalText}", "重新领取");
                         }
                         listhtml = listhtml.replace("{couponid}", item.CouponId);
                         listhtml = listhtml.replace("{CouponNo}", item.CouponNo);
                         listhtml = listhtml.replace("{userid}", userid);
                         listhtml = listhtml.replace("{Title}", item.Title);
                         listhtml = listhtml.replace("{time}", item.time);
+
+                        listhtml = listhtml.replace("{BrandName}", item.BrandName);
+                        listhtml = listhtml.replace("{GoodsName}", item.GoodsName);
+
+
                         listhtml = listhtml.replace(/{Amounts}/gm, "剩余" + item.Amounts + "张");
                         listhtml = listhtml.replace("{Money}", item.Money.toFixed(2).split(".")[0]);
                         listhtml = listhtml.replace("{Money2}", item.Money.toFixed(2).split(".")[1]);
@@ -83,6 +96,10 @@ function couponlist(page) {
                             $("#listMode").html(listhtml);
                         else
                             $("#listMode").append(listhtml);
+                    }
+                    else {
+                        if (page == 1)
+                            $("#listMode").html(listhtml);
                     }
                     nextPage(page, ret.data.PageCount, couponlist);
                     $.hideLoading();
@@ -98,6 +115,55 @@ function couponlist(page) {
 }
 
 
+function GetBrandList() {
+    var postData = {
+        action: "GetBrandList"
+    }
+    hotUtil.ajaxCall(hotUtil.ajaxUrl, postData, function (ret, err) {
+        if (ret) {
+            if (ret.status == 200) {
+                if (ret.data) {
+                    var html = '<li class="fixed brandli" id="brandli0"><a href="javascript:GetGoodsList(0);">全部</a></li>';
+                    $.each(ret.data, function (i, item) {
+                        html += '<li class="brandli" id="brandli' + item.BrandId + '"><a href="javascript:GetGoodsList(' + item.BrandId + ');">' + item.Title + '</a></li>';
+                    });
+                    $("#brandlist").html(html);
+                }
+            }
+        }
+    });
+}
+
+function GetGoodsList(bid) {
+    var postData = {
+        action: "GetGoodsListByBrandId",
+        brandId: bid
+    }
+    brandId = bid;
+    goodsId = 0;
+    $(".brandli").removeClass("fixed");
+    $("#brandli" + bid).addClass("fixed");
+    hotUtil.ajaxCall(hotUtil.ajaxUrl, postData, function (ret, err) {
+        if (ret) {
+            if (ret.status == 200) {
+                if (ret.data) {
+                    var html = '';
+                    $.each(ret.data, function (i, item) {
+                        html += '<li class="goodsli" id="goodsli' + item.GoodsId + '"><a href="javascript:GoodsSelected(' + item.GoodsId + ');">' + item.GoodsName + '</a></li>';
+                    });
+                    $("#goodslist").html(html);
+                }
+            }
+        }
+    });
+}
+
+
+function GoodsSelected(gid) {
+    goodsId = gid;
+    $(".goodsli").removeClass("fixed");
+    $("#goodsli" + gid).addClass("fixed");
+}
 
 
 //获取我分享的优惠券列表
@@ -109,7 +175,8 @@ function myCouponlist(page) {
         pageSize: hotUtil.pageSize,
         userid: userid,
         type: tabtype,
-        usertype: usertype
+        usertype: usertype,
+        shopid: hotUtil.getQuery("shopid", 0)
     }
     $.showLoading("正在加载...");
     hotUtil.ajaxCall(hotUtil.ajaxUrl, param, function (ret, err) {
@@ -144,6 +211,10 @@ function myCouponlist(page) {
                             $("#listMode").html(listhtml);
                         else
                             $("#listMode").append(listhtml);
+                    }
+                    else {
+                        if (page == 1)
+                            $("#listMode").html(listhtml);
                     }
                     nextPage(page, ret.data.PageCount, myCouponlist);
                     $.hideLoading();
@@ -257,6 +328,7 @@ function onCouponGet() {
         mobile: $("#txtmobile").val(),
         currentuserid: currentUserId,
         from: hotUtil.getQuery("fr", ""),
+        shops: shops,
         sign: sign
     }
     $.showLoading("正在加载...");
@@ -519,5 +591,62 @@ function myVerifyList(page) {
                 $('.hot-pullToRefresh').pullToRefreshDone();
             }
         }
+    });
+}
+
+
+
+
+
+//门店列表
+function shopList(page) {
+    hotUtil.pageIndex = page;
+    var param = {
+        action: "shoplist",
+        pageIndex: page,
+        pageSize: hotUtil.pageSize,
+        userid: userid,
+        couponid: couponid,
+        type: hotUtil.getQuery("type", 0)
+    }
+    $.showLoading("正在加载...");
+    hotUtil.ajaxCall(hotUtil.ajaxUrl, param, function (ret, err) {
+        if (ret) {
+            if (ret.status == 200) {
+                if (ret.data) {
+                    var listhtml = "";
+                    $.each(ret.data.Rows, function (i, item) {
+                        listhtml += $("#couponlistTemplate").html();
+                        listhtml = listhtml.replace("{shopName}", item.ShopName);
+                        if (param.type == 1)
+                            listhtml = listhtml.replace("{url}", "couponlist.aspx?userid=" + userid + "&shopid=" + item.ShopID);
+                        else if (param.type == 2)
+                            listhtml = listhtml.replace("{url}", "myCouponlist.aspx?shopid=" + item.ShopID);
+                        else if (param.type == 3)
+                            listhtml = listhtml.replace("{url}", "turncouponlist.aspx?fr=list&shopid=" + item.ShopID);
+                        else
+                            listhtml = listhtml.replace("{url}", "");
+
+                    });
+                    if (!hotUtil.isNullOrEmpty(listhtml)) {
+                        if (page == 1)
+                            $("#listMode").html(listhtml);
+                        else
+                            $("#listMode").append(listhtml);
+
+                        document.title = "选择门店";
+                    }
+                    else {
+                        document.title = "";
+                    }
+                    nextPage(page, ret.data.PageCount, shopList);
+                }
+            }
+            else {
+                $.alert(ret.statusText);
+                $('.hot-pullToRefresh').pullToRefreshDone();
+            }
+        }
+        $.hideLoading();
     });
 }

@@ -88,6 +88,15 @@ namespace msite.handler
                     case "VERIFYLIST":
                         VerifyList();
                         break;
+                    case "SHOPLIST":
+                        shoplist();
+                        break;
+                    case "GETBRANDLIST":
+                        GetBrandList();
+                        break;
+                    case "GETGOODSLISTBYBRANDID":
+                        GetGoodsListByBrandId();
+                        break;
                     default:
                         break;
                 }
@@ -111,10 +120,13 @@ namespace msite.handler
             {
                 PageIndex = GetFormValue("pageIndex", 1),
                 PageSize = GetFormValue("pageSize", 20),
-                UserId = GetFormValue("userid", 0)
+                UserId = GetFormValue("userid", 0),
+                brandId = GetFormValue("brandid", 0),
+                goodsId = GetFormValue("goodsid", 0)
             };
             string from = GetFormValue("from", "");
-            var data = UserLogic.Instance.GetAppCashCouponList(model, from);
+            int shopId = GetFormValue("shopid", 0);
+            var data = UserLogic.Instance.GetAppCashCouponList(model, from, shopId);
             json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK, data));
         }
 
@@ -131,7 +143,8 @@ namespace msite.handler
                 UserId = GetFormValue("userid", 0),
                 searchType = GetFormValue("usertype", 1)
             };
-            var data = UserLogic.Instance.GetAppMyShareCouponList(model);
+            int shopId = GetFormValue("shopid", 0);
+            var data = UserLogic.Instance.GetAppMyShareCouponList(model, shopId);
             json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK, data));
         }
 
@@ -179,19 +192,22 @@ namespace msite.handler
             string mobile = GetFormValue("mobile", "");
             string from = GetFormValue("from", "");
 
+            string shops = GetFormValue("shops", "");
 
 
-            var couponInfo = UserLogic.Instance.GetMyCouponModel(currentuserid, couponid);
-            if (couponInfo == null)
-            {
-                bool flag = UserLogic.Instance.onCouponGet(couponid, userid, currentuserid, name, mobile, from);
-                if (flag)
-                    json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK));
-                else
-                    json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.优惠券已领完));
-            }
+
+            //var couponInfo = UserLogic.Instance.GetMyCouponModel(currentuserid, couponid);
+            //if (couponInfo == null)
+            //{
+            ApiStatusCode apiCode = ApiStatusCode.OK;
+            bool flag = UserLogic.Instance.onCouponGet(couponid, userid, currentuserid, name, mobile, from, shops, ref apiCode);
+            if (flag)
+                json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK));
             else
-                json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.优惠券已领完, "您已领取过了，无需重复领取"));
+                json = JsonConvert.SerializeObject(new ResultModel(apiCode));
+            //}
+            //else
+            //    json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.优惠券已领完, "您已领取过了，无需重复领取"));
         }
 
 
@@ -300,6 +316,37 @@ namespace msite.handler
             };
             var data = UserLogic.Instance.GetVerifyCouponList(model);
             json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK, data));
+        }
+
+
+
+        /// <summary>
+        /// 门店列表
+        /// </summary>
+        private void shoplist()
+        {
+            SearchModel model = new SearchModel()
+            {
+                PageIndex = GetFormValue("pageIndex", 1),
+                PageSize = GetFormValue("pageSize", 20),
+                UserId = GetFormValue("userid", 0),
+                type = GetFormValue("type", 0)
+            };
+            int couponid = GetFormValue("couponid", 0);
+            int currentuserid = GetFormValue("currentuserid", 0);
+            var data = UserLogic.Instance.GetShopList(model, couponid, currentuserid);
+            json = JsonConvert.SerializeObject(new ResultModel(ApiStatusCode.OK, data));
+        }
+
+        private void GetBrandList()
+        {
+            var data = UserLogic.Instance.GetBrandList();
+            json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK, data));
+        }
+        private void GetGoodsListByBrandId()
+        {
+            var data = UserLogic.Instance.GetGoodsList(GetFormValue("brandId", 0));
+            json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK, data));
         }
     }
 }

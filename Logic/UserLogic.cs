@@ -74,10 +74,73 @@ namespace Logic
         /// <returns>true if XXXX, false otherwise.</returns>
         public bool EditCashCoupon(CashCouponModel model)
         {
-            if (model.CouponId > 0)
-                return dal.UpdateCashCoupon(model);
-            else
-                return dal.AddCashCoupon(model) > 0;
+            string[] ids = model.ShopIds.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string[] goodsids = model.GoodsIds.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            bool result = false;
+            using (TransactionScope scope = new TransactionScope())
+            {
+
+                int couponId = 0, couponIdTwo = 0;
+
+                if (model.CouponId > 0)
+                {
+                    var couponModel = dal.GetCouponModel(model.CouponId);
+                    if (couponModel != null)
+                    {
+                        result = dal.UpdateCashCoupon(model);
+                        if (result)
+                        {
+                            if (string.IsNullOrEmpty(couponModel.ShopIds))
+                                couponId = couponModel.CouponId;
+
+                            if (string.IsNullOrEmpty(couponModel.GoodsIds))
+                                couponIdTwo = couponModel.CouponId;
+
+                        }
+                    }
+                }
+                else
+                {
+                    couponId = dal.AddCashCoupon(model);
+                    couponIdTwo = couponId;
+                }
+                if (couponId > 0)
+                {
+                    if (model.ShopIds != "-100")
+                    {
+                        foreach (var shopId in ids)
+                        {
+                            if (!string.IsNullOrEmpty(shopId))
+                                dal.AddShopCouponInfo(Convert.ToInt32(shopId), couponId);
+                        }
+                    }
+                    else
+                    {
+                        List<ShopModel> lst = dal.GetShopIds(model.BrandId);
+                        foreach (var item in lst)
+                        {
+                            dal.AddShopCouponInfo(item.ShopID, couponId);
+                        }
+                    }
+                    result = true;
+                }
+
+                if (couponIdTwo > 0)
+                {
+                    if (model.GoodsIds != "-100")
+                    {
+                        foreach (var goodsid in goodsids)
+                        {
+                            if (!string.IsNullOrEmpty(goodsid))
+                                dal.AddGoodsCouponInfo(Convert.ToInt32(goodsid), couponId);
+                        }
+                    }
+                    result = true;
+                }
+                scope.Complete();
+            }
+            return result;
         }
 
         /// <summary>
@@ -135,6 +198,20 @@ namespace Logic
         {
             return dal.GetBrandList();
         }
+
+
+        /// <summary>
+        /// 获取商品列表
+        /// </summary>
+        /// <param name="brandId">品牌ID</param>
+        /// <returns>List&lt;GoodsModel&gt;.</returns>
+        public List<GoodsModel> GetGoodsList(int brandId)
+        {
+            return dal.GetGoodsList(brandId);
+
+        }
+
+
         /// <summary>
         /// 修改用户密码
         /// </summary>
@@ -354,9 +431,9 @@ namespace Logic
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>ResultPageModel.</returns>
-        public ResultPageModel GetAppCashCouponList(SearchModel model, string from)
+        public ResultPageModel GetAppCashCouponList(SearchModel model, string from, int shopId)
         {
-            return dal.GetAppCashCouponList(model, from);
+            return dal.GetAppCashCouponList(model, from, shopId);
         }
         /// <summary>
         /// 获取优惠券详情
@@ -529,9 +606,9 @@ namespace Logic
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>ResultPageModel.</returns>
-        public ResultPageModel GetAppMyShareCouponList(SearchModel model)
+        public ResultPageModel GetAppMyShareCouponList(SearchModel model, int shopId)
         {
-            return dal.GetAppMyShareCouponList(model);
+            return dal.GetAppMyShareCouponList(model, shopId);
         }
 
         /// <summary>
@@ -565,7 +642,7 @@ namespace Logic
             return dal.GetUservVerifyCount(userId);
         }
 
-
+        private static object couponGetObj = new object();
         /// <summary>
         /// 领取优惠券
         /// </summary>
@@ -576,37 +653,64 @@ namespace Logic
         /// <param name="mobile">The mobile.</param>
         /// <param name="from">From.</param>
         /// <returns>true if XXXX, false otherwise.</returns>
-        public bool onCouponGet(int couponid, int userid, int currentuserid, string name, string mobile, string from)
+        public bool onCouponGet(int couponid, int userid, int currentuserid, string name, string mobile, string from, string shops, ref ApiStatusCode apiCode)
         {
-            using (TransactionScope scope = new TransactionScope())
+            lock (couponGetObj)
             {
-                if (couponid == 0 || userid == 0 || currentuserid == 0)
-                    return false;
-                var couponInfo = dal.GetCouponDetailById(couponid);
-                if (couponInfo == null || couponInfo.Amounts <= 0)
-                    return false;
+                string[] ids = shops.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (from == "list")
-                    dal.AddCouponShareLog(couponid, userid);
-                var logModel = new CashCouponLogModel()
+                using (TransactionScope scope = new TransactionScope())
                 {
-                    UserId = currentuserid,
-                    CouponId = couponid,
-                    CouponNo = StringHelper.CreateCheckCodeWithNum(10),
-                    IsGet = 1,
-                    GetTime = DateTime.Now,
-                    ShareUserId = userid,
-                    Name = name,
-                    Mobile = mobile
-                };
+                    if (couponid == 0 || currentuserid == 0)
+                    {
+                        apiCode = ApiStatusCode.操作失败;
+                        return false;
+                    }
+                    var couponInfo = dal.GetCouponDetailById(couponid);
+                    if (couponInfo == null || couponInfo.Amounts <= 0)
+                    {
+                        apiCode = ApiStatusCode.优惠券已领完;
+                        return false;
+                    }
+                    if (ids.Count() > couponInfo.Amounts)
+                    {
+                        apiCode = ApiStatusCode.优惠券数量不够;
+                        return false;
+                    }
+                    if (ids.Count() <= 0)
+                    {
+                        apiCode = ApiStatusCode.请选择门店;
+                        return false;
+                    }
 
-                if (dal.AddCouponGetLog(logModel) > 0)
-                {
-                    dal.AddCouponGetAmount(couponid, userid);
+
+                    if (from == "list" && userid > 0)
+                        dal.AddCouponShareLog(couponid, userid);
+
+                    Random rnd = new Random(Guid.NewGuid().GetHashCode());
+                    var logModel = new CashCouponLogModel()
+                    {
+                        UserId = currentuserid,
+                        CouponId = couponid,
+                        CouponNo = StringHelper.CreateCheckCode(10, 1, rnd),
+                        IsGet = 1,
+                        GetTime = DateTime.Now,
+                        ShareUserId = userid,
+                        Name = name,
+                        Mobile = mobile
+                    };
+
+                    foreach (var shopid in ids)
+                    {
+                        logModel.ShopId = Convert.ToInt32(shopid);
+                        logModel.CouponNo = StringHelper.CreateCheckCode(10, 1, rnd);
+                        if (dal.AddCouponGetLog(logModel) > 0)
+                            dal.AddCouponGetAmount(couponid, userid);
+                    }
                     dal.UpdateUserInfo(currentuserid, name, mobile);
+                    scope.Complete();
+                    return true;
                 }
-                scope.Complete();
-                return true;
             }
         }
 
@@ -704,12 +808,14 @@ namespace Logic
                 var shareUserId = couponInfo.ShareUserId;
                 var rebateMoney = couponInfo.RebateMoney;
 
+                //如果分享用户ID未空，则表示该优惠是用户自己领取的，则用户归属为核销人，返利也给核销人
+                shareUserId = shareUserId > 0 ? shareUserId : currentUserId;
                 using (TransactionScope scope = new TransactionScope())
                 {
                     //修改优惠券使用状态
-                    if (dal.HxCouponInfo(couponInfo.LogId, currentUserId))
+                    if (dal.HxCouponInfo(couponInfo.LogId, currentUserId, couponInfo.ShareUserId > 0))
                     {
-                        //添加锁定金额
+                        //添加金额
                         dal.addUserMoney(shareUserId, rebateMoney);
                         //添加返利记录
                         dal.AddRebateLog(new RebateLogModel()
@@ -744,6 +850,160 @@ namespace Logic
         public bool ChanagePassword(int userId, string oldPassword, string password)
         {
             return dal.ChanagePassword(userId, oldPassword, password);
+        }
+
+
+        /// <summary>
+        /// 获取门店
+        /// </summary>
+        /// <param name="BrandId">The brand identifier.</param>
+        /// <param name="model">The model.</param>
+        /// <returns>ResultPageModel.</returns>
+        public ResultPageModel GetShopList(int BrandId, SearchModel model)
+        {
+            return dal.GetShopList(BrandId, model);
+        }
+        /// <summary>
+        /// 编辑门店信息
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="apiCode">The API code.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool EditShopInfo(ShopModel model, out ApiStatusCode apiCode)
+        {
+            apiCode = ApiStatusCode.OK;
+            if (model.ShopID > 0)
+            {
+                if (dal.UpdateShopInfo(model))
+                {
+                    apiCode = ApiStatusCode.OK;
+                    return true;
+                }
+                else
+                    apiCode = ApiStatusCode.更新失败;
+            }
+            else
+            {
+                int flag = dal.AddShopInfo(model);
+                if (flag > 0)
+                    return true;
+                else
+                    apiCode = ApiStatusCode.添加失败;
+            }
+            return false;
+        }
+        /// <summary>
+        /// 删除门店
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        public bool DeleteShopInfo(int shopId)
+        {
+            return dal.DeleteShopInfo(shopId);
+        }
+        /// <summary>
+        /// 修改用户的门店
+        /// </summary>
+        /// <param name="shopId">The shop identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool UpdateUserShopId(int shopId, int userId)
+        {
+            return dal.UpdateUserShopId(shopId, userId);
+        }
+
+        /// <summary>
+        /// 根据优惠券ID，获取门店ID
+        /// </summary>
+        /// <param name="couponId">The coupon identifier.</param>
+        /// <returns>List&lt;ShopJsonModel&gt;.</returns>
+        public List<ShopJsonModel> GetShopListByCouponId(int couponId)
+        {
+            return dal.GetShopListByCouponId(couponId);
+        }
+
+
+        /// <summary>
+        /// 获取门店
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="couponId">The coupon identifier.</param>
+        /// <param name="currentUserId">The current user identifier.</param>
+        /// <returns>ResultPageModel.</returns>
+        public ResultPageModel GetShopList(SearchModel model, int couponId, int currentUserId)
+        {
+            if (model.type == 1 || model.type == 3)//发券中心
+            {
+                return dal.GetShopList(0, model);
+            }
+            else if (model.type == 2)//我领的券
+            {
+                return dal.GetShopList(model);
+            }
+            return new ResultPageModel();
+        }
+
+
+        /// <summary>
+        /// 获取商品
+        /// </summary>
+        /// <param name="BrandId">The brand identifier.</param>
+        /// <param name="model">The model.</param>
+        /// <returns>ResultPageModel.</returns>
+        public ResultPageModel GetGoodsList(int BrandId, SearchModel model)
+        {
+            return dal.GetGoodsList(BrandId, model);
+        }
+
+
+        /// <summary>
+        /// 删除商品
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        public bool DeleteGoodsInfo(int goodsId)
+        {
+            return dal.DeleteGoodsInfo(goodsId);
+        }
+        /// <summary>
+        /// 更新商品信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool UpdateGoodsInfo(GoodsModel model)
+        {
+            return dal.UpdateGoodsInfo(model);
+        }
+
+
+        /// <summary>
+        /// 编辑门店信息
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="apiCode">The API code.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool EditGoodsInfo(GoodsModel model, out ApiStatusCode apiCode)
+        {
+            apiCode = ApiStatusCode.OK;
+            if (model.GoodsId > 0)
+            {
+                if (dal.UpdateGoodsInfo(model))
+                {
+                    apiCode = ApiStatusCode.OK;
+                    return true;
+                }
+                else
+                    apiCode = ApiStatusCode.更新失败;
+            }
+            else
+            {
+                int flag = dal.AddGoodsInfo(model);
+                if (flag > 0)
+                    return true;
+                else
+                    apiCode = ApiStatusCode.添加失败;
+            }
+            return false;
         }
 
     }

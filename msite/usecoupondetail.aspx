@@ -25,6 +25,7 @@
     <div class="lodinggoss">
         <div class="bacfff textc">
             <div style="color: #999; text-align: center; padding: 6px 10%;">
+                <p style="font-size: 14px; color: #111;"><b><%=couponInfo.ShopName %></b></p>
                 <p style="font-size: 14px">【&nbsp;券编号：<%=couponInfo.CouponNo %>&nbsp;】</p>
                 <p style="font-size: 20px; color: #111; line-height: 20px; margin-top: 10px"><b><%=couponInfo.Title %></b></p>
             </div>
@@ -36,6 +37,7 @@
                 <p>
                     <%=couponInfo.time %>
                 </p>
+                <p style="font-size: 14px; color: #111; margin-top: 4px"><b><%=couponInfo.BrandName %>【<%=couponInfo.GoodsName %>】</b></p>
                 <div style="margin-top: 10px; background-color: #f8f8f8; font-size: 12px; text-align: left; padding: 10px; border-radius: 10px; color: #999">
 
                     <p>•&nbsp;<%=couponInfo.Remark %></p>

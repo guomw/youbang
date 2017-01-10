@@ -1,0 +1,232 @@
+2016/12/28 15:20:42,497 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:20:46,662 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:20:48,113 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:20:48,593 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:21:19,860 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:21:22,378 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:21:26,396 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:22:28,738 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:23:05,402 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:23:14,949 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:23:24,742 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:24:06,579 ERROR action:getshoplist StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteScalar(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.AbstractDAL.getPageData[T](Int32 PageSize, Int32 PageIndex, String strSql, String orderbyField, Boolean orderby, SqlParameter[] commandParameters) 位置 J:\HOT\CODE\youbang\Logic\DAL\AbstractDAL.cs:行号 149
+   在 Logic.DAL.UserDAL.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1306
+   在 Logic.UserLogic.GetShopList(Int32 BrandId, SearchModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 758
+   在 Web.handler.HQ.GetShopList() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 412
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 135 Message:对象名 'ShopList' 无效。
+2016/12/28 15:27:19,368 ERROR action:updateShop StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteNonQuery(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.UserDAL.AddShopInfo(ShopModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 1345
+   在 Logic.UserLogic.EditShopInfo(ShopModel model, ApiStatusCode& apiCode) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 781
+   在 Web.handler.HQ.UpdateShop() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 423
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 138 Message:对象名 'ShopList' 无效。
+2016/12/28 20:19:42,74 ERROR action:EditCashCoupon StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HotCoreUtils.DB.DbHelperSQLP.ExecuteNonQuery(String connectionString, CommandType cmdType, String cmdText, SqlParameter[] commandParameters)
+   在 Logic.DAL.UserDAL.UpdateCashCoupon(CashCouponModel model) 位置 J:\HOT\CODE\youbang\Logic\DAL\UserDAL.cs:行号 513
+   在 Logic.UserLogic.EditCashCoupon(CashCouponModel model) 位置 J:\HOT\CODE\youbang\Logic\UserLogic.cs:行号 88
+   在 Web.handler.HQ.EditCashCoupon() 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 176
+   在 Web.handler.HQ.DoRequest(HttpContext context) 位置 J:\HOT\CODE\youbang\Web\handler\HQ.ashx.cs:行号 81 Message:列名 'ShopIds' 无效。

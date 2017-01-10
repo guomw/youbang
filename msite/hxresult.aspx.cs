@@ -25,23 +25,28 @@ namespace msite
             //获取用户信息
             userInfo = GetUserBaseInfo();
             if (userInfo == null)
-            {                
+            {
                 Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("权限不足"));
             }
             if (userInfo.IsActive == 0)
-            {                
-                Response.Redirect("/error/500.html?note="+HttpUtility.UrlEncode("账号已冻结，请联系管理员"));
+            {
+                Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("账号已冻结，请联系管理员"));
             }
             if (userInfo.UserIdentity != 2)
-            {                
+            {
                 Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("权限不足"));
             }
 
             couponInfo = UserLogic.Instance.GetMyCouponModel(UserId, CouponId);
             if (couponInfo == null || couponInfo.IsEnable == 0)
-            {   
+            {
                 Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("该优惠券已作废"));
             }
+            if (couponInfo.ShopId != userInfo.shopId)
+            {
+                Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("非本店优惠券，无法使用"));
+            }
+
             if (couponInfo.expire == 1)
             {
                 couponType = 1;

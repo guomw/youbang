@@ -89,6 +89,9 @@ namespace Web.handler
                     case "GETBRANDLIST":
                         GetBrandList();
                         break;
+                    case "GETGOODSLISTBYBRANDID":
+                        GetGoodsListByBrandId();
+                        break;
                     case "GETCOUPONLOGLIST":
                         GetCouponlogList();
                         break;
@@ -129,6 +132,30 @@ namespace Web.handler
 
                     case "MODIFYPASSWORD":
                         modifyPassword();
+                        break;
+
+                    case "GETSHOPLIST":
+                        GetShopList();
+                        break;
+                    case "UPDATESHOP":
+                        UpdateShop();
+                        break;
+                    case "DELETESHOP":
+                        deleteshop();
+                        break;
+                    case "SETSHOPID":
+                        setShopId();
+                        break;
+
+
+                    case "GETGOODSLIST":
+                        GetGoodsList();
+                        break;
+                    case "DELETEGOODS":
+                        deleteGoods();
+                        break;
+                    case "UPDATEGOODS":
+                        UpdateGoods();
                         break;
                     default:
                         break;
@@ -173,7 +200,9 @@ namespace Web.handler
                 IsEnable = GetFormValue("couponenable", 1),
                 Amounts = GetFormValue("couponamount", 0),
                 RebateMoney = GetFormValue("couponrebate", 0),
-                Remark = GetFormValue("couponremark", "")
+                Remark = GetFormValue("couponremark", ""),
+                ShopIds = GetFormValue("shopids", "-100"),
+                GoodsIds = GetFormValue("goodsids", "-100")
             });
             json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
         }
@@ -204,6 +233,12 @@ namespace Web.handler
             json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK, data));
         }
 
+        private void GetGoodsListByBrandId()
+        {
+            var data = UserLogic.Instance.GetGoodsList(GetFormValue("brandId", 0));
+            json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK, data));
+        }
+
 
         /// <summary>
         /// 获取领取记录
@@ -217,7 +252,10 @@ namespace Web.handler
                 startTime = GetFormValue("startTime", ""),
                 endTime = GetFormValue("endTime", ""),
                 key = GetFormValue("key", ""),
-                Status = GetFormValue("searchType", -1)
+                Status = GetFormValue("searchType", -1),
+                shopname = GetFormValue("shopname", ""),
+                mobile = GetFormValue("usermobile", ""),
+                name = GetFormValue("username", "")
             };
             int couponId = GetFormValue("couponId", 0);
             var data = UserLogic.Instance.GetUserCashCouponLogList(couponId, GetFormValue("searchType", -1), model);
@@ -233,7 +271,9 @@ namespace Web.handler
                 PageSize = Convert.ToInt32(GetFormValue("pageSize", 20)),
                 startTime = GetFormValue("startTime", ""),
                 endTime = GetFormValue("endTime", ""),
-                key = GetFormValue("key", "")
+                key = GetFormValue("key", ""),
+                shopname = GetFormValue("shopname", ""),
+                mobile = GetFormValue("usermobile", "")
             };
             int applystatus = GetFormValue("applystatus", -2);
             var data = UserLogic.Instance.GetUserList(1, applystatus, model);
@@ -385,6 +425,110 @@ namespace Web.handler
                 json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
             else
                 json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.旧密码不对));
+        }
+
+
+        private void GetShopList()
+        {
+            SearchModel model = new SearchModel()
+            {
+                PageIndex = Convert.ToInt32(GetFormValue("pageIndex", 1)),
+                PageSize = Convert.ToInt32(GetFormValue("pageSize", 20)),
+                startTime = GetFormValue("startTime", ""),
+                endTime = GetFormValue("endTime", ""),
+                key = GetFormValue("key", "")
+            };
+            int brandId = GetFormValue("brandid", 0);
+            var data = UserLogic.Instance.GetShopList(brandId, model);
+            json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK, data));
+        }
+
+        private void UpdateShop()
+        {
+            string shopname = GetFormValue("shopname", "");
+            string username = GetFormValue("username", "");
+            string usermobile = GetFormValue("usermobile", "");
+            string shopaddress = GetFormValue("shopaddress", "");
+            ApiStatusCode apiCode;
+            bool flag = UserLogic.Instance.EditShopInfo(new ShopModel()
+            {
+                ShopID = GetFormValue("shopId", 0),
+                ShopName = shopname,
+                ShopAddress = shopaddress,
+                ShopContacts = username,
+                ShopTel = usermobile,
+                BrandId = GetFormValue("sltbrands", 0)
+            }, out apiCode);
+            if (flag)
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
+            else
+                json = JsonHelper.JsonSerializer(new ResultModel(apiCode));
+        }
+
+        private void deleteshop()
+        {
+            int shopId = GetFormValue("shopId", 0);
+            if (UserLogic.Instance.DeleteShopInfo(shopId))
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
+            else
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.删除失败));
+        }
+
+
+
+        private void setShopId()
+        {
+            int shopId = GetFormValue("shopid", 0);
+            int userid = GetFormValue("userid", 0);
+            if (UserLogic.Instance.UpdateUserShopId(shopId, userid))
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
+            else
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.保存失败));
+
+        }
+
+
+
+        private void GetGoodsList()
+        {
+            SearchModel model = new SearchModel()
+            {
+                PageIndex = Convert.ToInt32(GetFormValue("pageIndex", 1)),
+                PageSize = Convert.ToInt32(GetFormValue("pageSize", 20)),
+                startTime = GetFormValue("startTime", ""),
+                endTime = GetFormValue("endTime", ""),
+                key = GetFormValue("key", "")
+            };
+            int brandId = GetFormValue("brandid", 0);
+            var data = UserLogic.Instance.GetGoodsList(brandId, model);
+            json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK, data));
+        }
+
+
+
+        private void UpdateGoods()
+        {
+            string goodsname = GetFormValue("goodsname", "");
+            ApiStatusCode apiCode;
+            bool flag = UserLogic.Instance.EditGoodsInfo(new GoodsModel()
+            {
+                GoodsId = GetFormValue("goodsId", 0),
+                GoodsName = goodsname,
+                BrandId = GetFormValue("sltbrands", 0)
+            }, out apiCode);
+            if (flag)
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
+            else
+                json = JsonHelper.JsonSerializer(new ResultModel(apiCode));
+        }
+
+        private void deleteGoods()
+        {
+            int shopId = GetFormValue("goodsId", 0);
+            if (UserLogic.Instance.DeleteGoodsInfo(shopId))
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.OK));
+            else
+                json = JsonHelper.JsonSerializer(new ResultModel(ApiStatusCode.删除失败));
         }
     }
 }

@@ -45,6 +45,32 @@ function getDemoData() {
     });
 
     menuList.push({
+        ItemCode: "1000201",
+        ItemNavLabel: "品牌管理",
+        ItemUrl: "admin/brandlist.html",
+        ItemParentCode: "10002",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+    menuList.push({
+        ItemCode: "1000202",
+        ItemNavLabel: "门店管理",
+        ItemUrl: "admin/shoplist.html",
+        ItemParentCode: "10002",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+
+    menuList.push({
+        ItemCode: "1000203",
+        ItemNavLabel: "商品管理",
+        ItemUrl: "admin/goodslist.html",
+        ItemParentCode: "10002",
+        ItemShow: 1,
+        ItemIcons: "fa-home"
+    });
+
+    menuList.push({
         ItemCode: "10003",
         ItemNavLabel: "优惠券管理",
         ItemUrl: "",

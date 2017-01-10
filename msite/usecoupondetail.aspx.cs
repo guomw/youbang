@@ -22,20 +22,14 @@ namespace msite
             couponInfo = UserLogic.Instance.GetMyCouponModel(UserId, CouponId);
             if (couponInfo == null || couponInfo.IsEnable == 0)
             {
-                //this.WriteLog("该优惠券已作废");
-                //return;
                 Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("该优惠券已作废"));
             }
             if (couponInfo.IsUse == 1)
             {
-                //this.WriteLog("优惠券已使用");
-                //return;
                 Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("优惠券已使用"));
             }
             if (couponInfo.IsRecycle == 1)
             {
-                //this.WriteLog("优惠券已回收");
-                //return;
                 Response.Redirect("/error/500.html?note=" + HttpUtility.UrlEncode("优惠券已回收"));
             }
         }

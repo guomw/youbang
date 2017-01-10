@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="weui_cells weui_cells_access" style="margin-top: 0px">
-            <a class="weui_cell" href="couponlist.aspx?userid=<%=userInfo.UserId %>">
+            <a class="weui_cell" href="couponlist.aspx?userid=<%=userInfo.UserId %>&shopid=0">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
                         <img src="images/icon/iconfont-quan.png" class="w-icon">发券中心
@@ -114,5 +114,6 @@
 <script>
     $(function () {
         FastClick.attach(document.body);
+        
     })
 </script>

@@ -96,13 +96,16 @@
     <Content Include="images\dhhh.png" />
     <Content Include="images\icon\hexiao.png" />
     <Content Include="images\icon\iconfont-quan.png" />
+    <Content Include="images\icon\mendian.png" />
     <Content Include="images\icon\qian.png" />
     <Content Include="images\icon\quan.png" />
     <Content Include="images\imgsss.png" />
     <Content Include="images\j2.jpg" />
     <Content Include="images\klkl.jpg" />
+    <Content Include="images\mdmd.png" />
     <Content Include="images\mengbanzis.png" />
     <Content Include="images\name.png" />
+    <Content Include="images\ssxx.png" />
     <Content Include="images\tixx.png" />
     <Content Include="images\yyuan.png" />
     <Content Include="images\yyuan1.png" />
@@ -145,6 +148,7 @@
     <Content Include="OAuth2\WeixinCallback.aspx" />
     <Content Include="rebatelist.aspx" />
     <Content Include="scan.aspx" />
+    <Content Include="shoplist.aspx" />
     <Content Include="turncouponlist.aspx" />
     <Content Include="usecoupondetail.aspx" />
     <Content Include="Web.config" />
@@ -281,6 +285,13 @@
     </Compile>
     <Compile Include="scan.aspx.designer.cs">
       <DependentUpon>scan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="shoplist.aspx.cs">
+      <DependentUpon>shoplist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="shoplist.aspx.designer.cs">
+      <DependentUpon>shoplist.aspx</DependentUpon>
     </Compile>
     <Compile Include="turncouponlist.aspx.cs">
       <DependentUpon>turncouponlist.aspx</DependentUpon>

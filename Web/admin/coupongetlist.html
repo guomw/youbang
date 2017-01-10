@@ -25,12 +25,28 @@
                         <div class="ibox-content p-m no-borders">
                             <div class="form-inline">
                                 <div class="form-group m-r-sm">
-                                    <label class="control-label" for="goodName">手机号码：</label>
+                                    <label class="control-label" for="goodName">编码：</label>
                                     <input type="text" class="form-control input-sm mb10" id="keyword" name="keyword" placeholder="" />
+                                </div>
+                                <div class="form-group m-r-sm">
+                                    <label class="control-label" for="goodName">手机：</label>
+                                    <input type="text" class="form-control input-sm mb10" id="usermobile" name="usermobile" placeholder="" />
                                 </div>
 
                                 <div class="form-group m-r-sm">
-                                    <label class="control-label" for="goodBn">时间：</label>
+                                    <label class="control-label" for="goodName">分销商：</label>
+                                    <input type="text" class="form-control input-sm mb10" id="username" name="username" placeholder="" />
+                                </div>
+
+                                <div class="form-group m-r-sm">
+                                    <label class="control-label" for="goodName">门店名称：</label>
+                                    <input type="text" class="form-control input-sm mb10" id="shopname" name="username" placeholder="" />
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="form-inline">
+                                <div class="form-group m-r-sm">
+                                    <label class="control-label" for="goodBn">领取时间：</label>
                                     <input type="text" class="form-control input-sm mb10 data-range-pick" id="createTimePick" name="createTimePick" start-element="#beginTime" end-element="#endTime" placeholder="开始时间-结束时间" style="width: 277px;" />
                                     <input type="hidden" id="beginTime" name="beginTime" />
                                     <input type="hidden" id="endTime" name="endTime" />
@@ -46,7 +62,7 @@
                                 </div>
                             </div>
                             <p style="height: 8px;"></p>
-                            <div class="form-inline" style="max-width: 926px; text-align: right;">
+                            <div class="form-inline" style="max-width: 926px; text-align: left;">
                                 <button type="button" onclick="couponHelper.search()" class="btn btn-success">筛选</button>
                                 <button type="button" onclick="couponHelper.searchAll()" class="btn btn-success">显示全部</button>
                             </div>
@@ -69,8 +85,12 @@
                                 <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>现金券编码</th>
+                                        <th>编码</th>
+                                        <th>优惠券</th>
                                         <th>领取电话</th>
+                                        <th>领取人</th>
+                                        <th>所属门店</th>
+                                        <th>分销商</th>
                                         <th>有效期</th>
                                         <th>领取时间</th>
                                         <th>是否核销</th>
@@ -92,7 +112,11 @@
         <tr>
             <td>{NO}</td>
             <td>{CouponNo}</td>
+            <td>{CouponName}</td>
             <td>{Mobile}</td>
+            <td>{Name}</td>
+            <td>{ShopName}</td>
+            <td>{RealName}</td>
             <td>{Time}</td>
             <td>{GetTime}</td>
             <td>{UseStatusName}</td>

@@ -18,6 +18,8 @@ namespace Model
         public int UserIdentity { get; set; }
 
 
+        public int shopId { get; set; }
+
         public string RealName { get; set; }
 
         public string NickName { get; set; }
@@ -71,6 +73,9 @@ namespace Model
         public DateTime ApplyTime { get; set; }
 
         public string Remark { get; set; }
+
+
+        public string ShopName { get; set; }
     }
 
 
@@ -194,6 +199,11 @@ namespace Model
         public string time { get; set; }
 
         public string Remark { get; set; }
+
+
+        public string ShopIds { get; set; }
+
+        public string GoodsIds { get; set; }
     }
 
 
@@ -205,6 +215,10 @@ namespace Model
 
         public int LogId { get; set; }
         public int CouponId { get; set; }
+
+        public int ShopId { get; set; }
+
+        public int BrandId { get; set; }
 
         public string CouponNo { get; set; }
 
@@ -240,6 +254,20 @@ namespace Model
         /// </summary>
         /// <value>The expire.</value>
         public int expire { get; set; }
+
+
+        public string ShopName { get; set; }
+
+        public string ShopAddress { get; set; }
+
+        public string BrandName { get; set; }
+
+        [JsonIgnore()]
+        public string GoodsIds { get; set; }
+
+        public string GoodsName { get; set; }
+
+
     }
 
 
@@ -423,6 +451,25 @@ namespace Model
         /// </summary>
         /// <value>The time.</value>
         public string time { get; set; }
+
+
+        public int ShopId { get; set; }
+
+
+        public string CouponName { get; set; }
+
+
+        public decimal RebateMoney { get; set; }
+
+        public string RealName { get; set; }
+
+        public string UserMobile { get; set; }
+
+        public string BrandName { get; set; }
+
+        public string ShopName { get; set; }
+
+
     }
 
     public class BrandModel

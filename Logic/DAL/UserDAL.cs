@@ -55,22 +55,29 @@ namespace Logic.DAL
             ResultPageModel result = new ResultPageModel();
             if (model == null)
                 return result;
-            string strSql = @"select * from UserList where 1=1 ";
+            string strSql = @"select u.*,shop.ShopName from UserList u
+                                left join ShopList shop on shop.ShopId=u.shopId
+                                 where 1=1 ";
 
             if (!string.IsNullOrEmpty(model.key))
-                strSql += string.Format(" and RealName like '%{0}%' ", model.key);
+                strSql += string.Format(" and u.RealName like '%{0}%' ", model.key);
 
+            if (!string.IsNullOrEmpty(model.mobile))
+                strSql += " and u.Mobile=@Mobile ";
+
+            if (!string.IsNullOrEmpty(model.shopname))
+                strSql += " and shop.ShopName=@ShopName ";
 
             if (applystatus == 1)
-                strSql += " and ApplyStatus=1 and UserIdentity<>0 ";
+                strSql += " and u.ApplyStatus=1 and u.UserIdentity<>0 ";
             else if (applystatus == 0)
-                strSql += " and ApplyStatus=0 ";
+                strSql += " and u.ApplyStatus=0 ";
             else
-                strSql += " and ApplyStatus=-2 ";
-            string orderbyField = "CreateTime";
+                strSql += " and u.ApplyStatus=-2 ";
+            string orderbyField = "u.CreateTime";
             if (userIdentity == 1)
             {
-                orderbyField = "ApplyTime";
+                orderbyField = "u.ApplyTime";
             }
 
             if (!string.IsNullOrEmpty(model.startTime))
@@ -80,7 +87,9 @@ namespace Logic.DAL
             var param = new[] {
                 new SqlParameter("@startTime", model.startTime),
                 new SqlParameter("@endTime", model.endTime),
-                new SqlParameter("@IsActive", model.Status)
+                new SqlParameter("@IsActive", model.Status),
+                new SqlParameter("@Mobile", model.mobile),
+                new SqlParameter("@ShopName", model.shopname)
             };
             //生成sql语句
             return getPageData<UserModel>(model.PageSize, model.PageIndex, strSql, orderbyField, param);
@@ -162,7 +171,7 @@ namespace Logic.DAL
             ResultPageModel result = new ResultPageModel();
             if (model == null)
                 return result;
-            string strSql = @"select c.CouponId,c.BrandId,c.Title,c.Money,c.StartTime,c.EndTime,c.IsEnable,c.Amounts,c.RebateMoney,c.CreateTime,b.Title as BrandName,c.Remark from CouponList c
+            string strSql = @"select c.CouponId,c.BrandId,c.Title,c.Money,c.StartTime,c.EndTime,c.IsEnable,c.Amounts,c.RebateMoney,c.CreateTime,b.Title as BrandName,c.Remark,c.ShopIds,c.GoodsIds from CouponList c
                             left join BrandList b on b.BrandId=c.BrandId
                             where IsDel=0 ";
 
@@ -212,32 +221,46 @@ namespace Logic.DAL
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>ResultPageModel.</returns>
-        public ResultPageModel GetAppCashCouponList(SearchModel model, string from)
+        public ResultPageModel GetAppCashCouponList(SearchModel model, string from, int shopId)
         {
             ResultPageModel result = new ResultPageModel();
             if (model == null)
                 return result;
-            string strSql = @"select c.CouponId,c.Title,'' as CouponNo,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts from CouponList c
-                            left join CouponLog l on l.CouponId=c.CouponId and l.IsRecycle=0 
-                            where c.IsDel=0  and c.IsEnable=1 
+            string strSql = @"select c.CouponId,c.Title,'' as CouponNo,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts,b.Title as BrandName,c.GoodsIds from CouponList c
+                            left join CouponLog l on l.CouponId=c.CouponId and l.IsRecycle=0       
+                            left join BrandList b on b.BrandId=c.BrandId              
+                            left join GoodsCouponList g on g.CouponId=c.CouponId            
+                            where c.IsDel=0  and c.IsEnable=1 {0}
                             and CONVERT(nvarchar(10),c.StartTime,121)<=CONVERT(nvarchar(10),GETDATE(),121) 
                             and CONVERT(nvarchar(10),c.EndTime,121)>=CONVERT(nvarchar(10),GETDATE(),121) 
-                            group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney";
+                            group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney,b.Title,c.GoodsIds";
 
-            if (from=="list")
-            {
-                strSql = @"select c.CouponId,c.Title,ISNULL(l.CouponNo,'') as CouponNo,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts from CouponList c
-                            left join CouponLog l on l.CouponId=c.CouponId and l.IsRecycle=0 and l.UserId=@UserId
-                            where c.IsDel=0  and c.IsEnable=1 
-                            and CONVERT(nvarchar(10),c.StartTime,121)<=CONVERT(nvarchar(10),GETDATE(),121) 
-                            and CONVERT(nvarchar(10),c.EndTime,121)>=CONVERT(nvarchar(10),GETDATE(),121) 
-                            group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney,l.CouponNo";
-            }
+            //if (from == "list")
+            //{
+            //    strSql = @"select c.CouponId,c.Title,ISNULL(l.CouponNo,'') as CouponNo,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts from CouponList c
+            //                left join CouponLog l on l.CouponId=c.CouponId and l.IsRecycle=0 and l.UserId=@UserId
+            //                left join ShopCouponList s on s.CouponId=c.CouponId
+            //                where c.IsDel=0  and c.IsEnable=1  {0}
+            //                and CONVERT(nvarchar(10),c.StartTime,121)<=CONVERT(nvarchar(10),GETDATE(),121) 
+            //                and CONVERT(nvarchar(10),c.EndTime,121)>=CONVERT(nvarchar(10),GETDATE(),121) 
+            //                group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney,l.CouponNo";
+            //}
+
+            //strSql = string.Format(strSql, shopId > 0 ? " and s.ShopId=@shopId " : "");
+            string sb = "";
+            if (model.brandId > 0)
+                sb += " and c.BrandId=@BrandId ";
+
+            if (model.goodsId > 0)
+                sb += " and g.GoodsId=@GoodsId ";
+
+            strSql = string.Format(strSql, string.IsNullOrEmpty(sb) ? "" : sb);
 
             var param = new[] {
-                new SqlParameter("@UserId", model.UserId)
+                new SqlParameter("@UserId", model.UserId),
+                new SqlParameter("@BrandId", model.brandId),
+                new SqlParameter("@GoodsId", model.goodsId)
             };
-
             //生成sql语句
             return getPageData<AppCashCouponModel>(model.PageSize, model.PageIndex, strSql, "c.EndTime", param, ((items) =>
               {
@@ -248,8 +271,25 @@ namespace Logic.DAL
                           item.expire = 0;
                       else
                           item.expire = 1;
+                      if (!string.IsNullOrEmpty(item.GoodsIds))
+                          item.GoodsName = GetGoodsName(item.GoodsIds);
+                      else
+                          item.GoodsName = "";
                   });
               }));
+        }
+
+
+        /// <summary>
+        /// 根据多个GoodsId，获取商品名称，并拼接在一起
+        /// </summary>
+        /// <param name="ids">The ids.</param>
+        /// <returns>System.String.</returns>
+        private string GetGoodsName(string ids)
+        {
+            var arr = ids.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            string strSql = string.Format("select stuff((select '、'+GoodsName from GoodsList where GoodsId in ({0}) for xml path('')),1,1,'')", string.Join(",", arr));
+            return DbHelperSQLP.ExecuteScalar(WebConfig.getConnectionString(), CommandType.Text, strSql).ToString();
         }
 
 
@@ -258,7 +298,7 @@ namespace Logic.DAL
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>ResultPageModel.</returns>
-        public ResultPageModel GetAppMyShareCouponList(SearchModel model)
+        public ResultPageModel GetAppMyShareCouponList(SearchModel model, int shopId)
         {
             ResultPageModel result = new ResultPageModel();
             if (model == null)
@@ -277,10 +317,11 @@ namespace Logic.DAL
             {
                 strSql = @"select s.CouponId,s.CouponNo, c.Title,c.Money,c.Remark,c.StartTime,c.EndTime,s.CreateTime ,0  as Amounts from CouponLog s
                             left join CouponList c on c.CouponId=s.CouponId
-                            where c.IsDel=0 and c.IsEnable=1 and s.UserId=@UserId  and s.IsUse=0 and s.IsRecycle=0";
+                            where c.IsDel=0 and c.IsEnable=1 and s.UserId=@UserId  and s.IsUse=0 and s.IsRecycle=0 and s.ShopId=@ShopId";
             }
             var parm = new[] {
-                new SqlParameter("@UserId",model.UserId)
+                new SqlParameter("@UserId",model.UserId),
+                new SqlParameter("@ShopId",shopId)
             };
             //生成sql语句
             return getPageData<AppCashCouponModel>(model.PageSize, model.PageIndex, strSql, "s.CreateTime", parm, ((items) =>
@@ -307,8 +348,10 @@ namespace Logic.DAL
         /// <returns>AppCashCouponModel.</returns>
         public AppCashCouponModel GetMyCouponModel(int userId, int couponId)
         {
-            string strSql = @"select top 1 s.id as LogId,s.CouponId,s.CouponNo, c.Title,c.Money,c.RebateMoney,c.Remark,c.StartTime,c.EndTime,s.IsUse,s.IsRecycle,c.IsEnable,s.ShareUserId from CouponLog s
+            string strSql = @"select top 1 s.id as LogId,s.CouponId,s.CouponNo, c.Title,c.Money,c.RebateMoney,c.Remark,c.StartTime,c.EndTime,s.IsUse,s.IsRecycle,c.IsEnable,s.ShareUserId,s.ShopId,shop.ShopName,shop.ShopAddress,b.Title as BrandName,c.GoodsIds from CouponLog s
                                 left join CouponList c on c.CouponId=s.CouponId
+                                left join ShopList shop on shop.ShopId=s.ShopId
+                                left join BrandList b on b.BrandId=c.BrandId   
                                 where c.IsDel=0  and s.UserId=@UserId and s.CouponId=@CouponId";
             var parm = new[] {
                 new SqlParameter("@UserId",userId),
@@ -325,6 +368,11 @@ namespace Logic.DAL
                         data.expire = 0;
                     else
                         data.expire = 1;
+
+                    if (!string.IsNullOrEmpty(data.GoodsIds))
+                        data.GoodsName = GetGoodsName(data.GoodsIds);
+                    else
+                        data.GoodsName = "";
                 }
 
                 return data;
@@ -414,12 +462,13 @@ namespace Logic.DAL
         /// <returns>AppCashCouponModel.</returns>
         public AppCashCouponModel GetCouponDetailById(int couponId)
         {
-            string strSql = @"select c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts from CouponList c
+            string strSql = @"select c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.RebateMoney,c.Remark,c.Amounts-COUNT(l.ID) as Amounts,c.BrandId,b.Title as BrandName,c.GoodsIds from CouponList c
                             left join CouponLog l on l.CouponId=c.CouponId and l.IsRecycle=0 
+                            left join BrandList b on b.BrandId=c.BrandId
                             where c.IsDel=0  and c.IsEnable=1 and c.CouponId=@CouponId
                             and CONVERT(nvarchar(10),c.StartTime,121)<=CONVERT(nvarchar(10),GETDATE(),121) 
                             and CONVERT(nvarchar(10),c.EndTime,121)>=CONVERT(nvarchar(10),GETDATE(),121) 
-                            group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney ";
+                            group by c.CouponId,c.Title,c.Money,c.StartTime,c.EndTime,c.Amounts,c.Remark,c.RebateMoney,c.BrandId,b.Title,c.GoodsIds ";
             var parm = new[] {
                 new SqlParameter("@CouponId",couponId)
             };
@@ -429,10 +478,30 @@ namespace Logic.DAL
                 if (data != null)
                     data.time = data.StartTime.ToString("yyyy.MM.dd") + " 至 " + data.EndTime.ToString("yyyy.MM.dd");
 
+
+                if (!string.IsNullOrEmpty(data.GoodsIds))
+                    data.GoodsName = GetGoodsName(data.GoodsIds);
+                else
+                    data.GoodsName = "";
+
                 return data;
             }
         }
 
+        public CashCouponModel GetCouponModel(int couponId)
+        {
+            string strSql = @"select * from CouponList where CouponId=@CouponId";
+            var parm = new[] {
+                new SqlParameter("@CouponId",couponId)
+            };
+            using (SqlDataReader dr = DbHelperSQLP.ExecuteReader(WebConfig.getConnectionString(), CommandType.Text, strSql.ToString(), parm))
+            {
+                var data = DbHelperSQLP.GetEntity<CashCouponModel>(dr);
+                if (data != null)
+                    data.time = data.StartTime.ToString("yyyy.MM.dd") + " 至 " + data.EndTime.ToString("yyyy.MM.dd");
+                return data;
+            }
+        }
 
         /// <summary>
         /// 删除现金券
@@ -456,7 +525,7 @@ namespace Logic.DAL
         /// <exception cref="System.NotImplementedException"></exception>
         public int AddCashCoupon(CashCouponModel model)
         {
-            string strSql = "insert into CouponList(Title,Money,StartTime,EndTime,IsEnable,BrandId,Amounts,RebateMoney,Remark) values(@Title,@Money,@StartTime,@EndTime,@IsEnable,@BrandId,@Amounts,@RebateMoney,@Remark);select @@IDENTITY;";
+            string strSql = "insert into CouponList(Title,Money,StartTime,EndTime,IsEnable,BrandId,Amounts,RebateMoney,Remark,Goodsids,ShopIds) values(@Title,@Money,@StartTime,@EndTime,@IsEnable,@BrandId,@Amounts,@RebateMoney,@Remark,@Goodsids,@ShopIds);select @@IDENTITY;";
             var parm = new[] {
                 new SqlParameter("@Title", model.Title),
                 new SqlParameter("@Money", model.Money),
@@ -466,7 +535,9 @@ namespace Logic.DAL
                 new SqlParameter("@BrandId", model.BrandId),
                 new SqlParameter("@Amounts", model.Amounts),
                 new SqlParameter("@RebateMoney", model.RebateMoney),
-                new SqlParameter("@Remark", model.Remark)
+                new SqlParameter("@Remark", model.Remark),
+                new SqlParameter("@Goodsids", model.GoodsIds),
+                new SqlParameter("@ShopIds", model.ShopIds)
             };
             object obj = DbHelperSQLP.ExecuteScalar(WebConfig.getConnectionString(), CommandType.Text, strSql.ToString(), parm);
             if (obj != null)
@@ -482,7 +553,7 @@ namespace Logic.DAL
         /// <exception cref="System.NotImplementedException"></exception>
         public bool UpdateCashCoupon(CashCouponModel model)
         {
-            string strSql = "update CouponList set Title=@Title,Money=@Money,StartTime=@StartTime,EndTime=@EndTime,IsEnable=@IsEnable,BrandId=@BrandId,Amounts=@Amounts,RebateMoney=@RebateMoney,Remark=@Remark where CouponId=@CouponId";
+            string strSql = "update CouponList set Title=@Title,Money=@Money,StartTime=@StartTime,EndTime=@EndTime,IsEnable=@IsEnable,BrandId=@BrandId,Amounts=@Amounts,RebateMoney=@RebateMoney,Remark=@Remark,ShopIds=@ShopIds,Goodsids=@Goodsids where CouponId=@CouponId";
             var parm = new[] {
                 new SqlParameter("@Title", model.Title),
                 new SqlParameter("@Money", model.Money),
@@ -493,7 +564,9 @@ namespace Logic.DAL
                 new SqlParameter("@BrandId", model.BrandId),
                 new SqlParameter("@Amounts", model.Amounts),
                 new SqlParameter("@RebateMoney", model.RebateMoney),
-                new SqlParameter("@Remark", model.Remark)
+                new SqlParameter("@Remark", model.Remark),
+                new SqlParameter("@ShopIds", model.ShopIds),
+                new SqlParameter("@Goodsids", model.GoodsIds)
             };
             return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql.ToString(), parm) > 0;
         }
@@ -521,6 +594,26 @@ namespace Logic.DAL
                 return DbHelperSQLP.GetEntityList<BrandModel>(dr);
             }
         }
+
+        /// <summary>
+        /// 获取商品列表
+        /// </summary>
+        /// <param name="brandId">品牌ID</param>
+        /// <returns>List&lt;GoodsModel&gt;.</returns>
+        public List<GoodsModel> GetGoodsList(int brandId)
+        {
+            string strSql = "select * from GoodsList  where 1=1 ";
+            if (brandId > 0)
+                strSql += " and BrandId=@BrandId ";
+            var parm = new[] {
+                new SqlParameter("@BrandId",brandId)
+            };
+            using (SqlDataReader dr = DbHelperSQLP.ExecuteReader(WebConfig.getConnectionString(), CommandType.Text, strSql, parm))
+            {
+                return DbHelperSQLP.GetEntityList<GoodsModel>(dr);
+            }
+        }
+
 
         /// <summary>
         /// 设置用户冻结或激活
@@ -675,20 +768,42 @@ namespace Logic.DAL
                 left join CouponList C on C.CouponId=L.CouponId
                 where L.IsDel=0 ";
 
+
+
+            strSql = @"select L.ID,L.UserId,L.CouponNo,c.Title as CouponName,c.RebateMoney,u.RealName,u.Mobile as UserMobile,b.Title as BrandName,s.ShopName,L.CouponId,L.Name,L.Mobile,L.IsGet,L.GetTime,L.IsUse,L.UseTime,L.VerifyUserId,L.ShareUserId,L.IsRecycle,L.RecycleTime,L.CreateTime,C.StartTime,C.EndTime,C.Money from CouponLog L with(nolock)
+                        left join CouponList C on C.CouponId=L.CouponId
+                        left join BrandList b on b.BrandId=C.BrandId
+                        left join UserList u on {0}
+                        left join ShopList s on s.ShopId=L.ShopId
+                        where L.IsDel=0 ";
+
+
+            strSql = string.Format(strSql, type == 1 ? " u.UserId=L.VerifyUserId " : " u.UserId=L.ShareUserId ");
+
             if (!string.IsNullOrEmpty(model.key))
+                strSql += " and L.CouponNo like '%" + model.key + "%' ";
+
+            if (!string.IsNullOrEmpty(model.mobile))
                 strSql += " and L.Mobile=@Mobile ";
+
+            if (!string.IsNullOrEmpty(model.name))
+                strSql += " and u.RealName=@RealName ";
+
+            if (!string.IsNullOrEmpty(model.shopname))
+                strSql += " and s.ShopName=@ShopName ";
+
 
             if (couponId > 0)
                 strSql += " and L.CouponId=@CouponId ";
             string orderbyField = "L.GetTime";
-            if (type == 0)
+            if (type == 0) //领取
                 strSql += " and L.IsGet=1 ";
-            else if (type == 1)
+            else if (type == 1)  //核销
             {
                 strSql += " and L.IsUse=1 ";
                 orderbyField = "L.UseTime";
             }
-            else if (type == 2)
+            else if (type == 2) //回收
             {
                 strSql += " and L.IsRecycle=1 ";
                 orderbyField = "L.RecycleTime";
@@ -702,7 +817,9 @@ namespace Logic.DAL
                 new SqlParameter("@startTime", model.startTime),
                 new SqlParameter("@endTime", model.endTime),
                 new SqlParameter("@CouponId", couponId),
-                new SqlParameter("@Mobile", model.key)
+                new SqlParameter("@Mobile", model.mobile),
+                new SqlParameter("@RealName", model.name),
+                new SqlParameter("@ShopName", model.shopname)
             };
             //生成sql语句
             return getPageData<CashCouponLogModel>(model.PageSize, model.PageIndex, strSql, orderbyField, param, (items =>
@@ -763,7 +880,7 @@ namespace Logic.DAL
         /// <returns>System.Int32.</returns>
         public int AddCouponGetLog(CashCouponLogModel model)
         {
-            string strSql = "insert into CouponLog(UserId,CouponId,CouponNo,Name,Mobile,IsGet,GetTime,ShareUserId) values(@UserId,@CouponId,@CouponNo,@Name,@Mobile,@IsGet,@GetTime,@ShareUserId)";
+            string strSql = "insert into CouponLog(UserId,CouponId,CouponNo,Name,Mobile,IsGet,GetTime,ShareUserId,ShopId) values(@UserId,@CouponId,@CouponNo,@Name,@Mobile,@IsGet,@GetTime,@ShareUserId,@ShopId)";
             var parm = new[] {
                 new SqlParameter("@UserId", model.UserId),
                 new SqlParameter("@CouponId", model.CouponId),
@@ -772,7 +889,8 @@ namespace Logic.DAL
                 new SqlParameter("@Mobile", model.Mobile),
                 new SqlParameter("@IsGet", model.IsGet),
                 new SqlParameter("@GetTime", model.GetTime),
-                new SqlParameter("@ShareUserId", model.ShareUserId)
+                new SqlParameter("@ShareUserId", model.ShareUserId),
+                new SqlParameter("@ShopId", model.ShopId)
             };
             return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql.ToString(), parm);
         }
@@ -783,10 +901,15 @@ namespace Logic.DAL
         /// </summary>
         /// <param name="logid">The logid.</param>
         /// <param name="verifyUserId">The verify user identifier.</param>
+        /// <param name="isShare">该优惠券是否是有分享来源</param>
         /// <returns>true if XXXX, false otherwise.</returns>
-        public bool HxCouponInfo(int logid, int verifyUserId)
+        public bool HxCouponInfo(int logid, int verifyUserId, bool isShare = true)
         {
-            string strSql = "update CouponLog set IsUse=1,UseTime=GETDATE(),VerifyUserId=@VerifyUserId where ID=@ID";
+            string strSql = "update CouponLog set IsUse=1,UseTime=GETDATE(),VerifyUserId=@VerifyUserId";
+
+            if (!isShare)
+                strSql += " ,ShareUserId=@VerifyUserId";
+            strSql += " where ID=@ID";
             var parm = new[] {
                 new SqlParameter("@ID",logid),
                 new SqlParameter("@VerifyUserId",verifyUserId)
@@ -1197,7 +1320,7 @@ namespace Logic.DAL
 
         public UserBaseInfoModel GetUserInfo(int userId)
         {
-            string strSql = "select UserId,UserIdentity,RealName,NickName,HeadImg,IsActive,Mobile,ApplyStatus,Money-MoneyLocked as UserMoney,Address from UserList UserList with(nolock)  where UserId=@UserId";
+            string strSql = "select UserId,UserIdentity,RealName,NickName,HeadImg,IsActive,Mobile,ApplyStatus,Money-MoneyLocked as UserMoney,Address,shopId from UserList with(nolock)  where UserId=@UserId";
             var param = new[] {
                 new SqlParameter("@UserId",userId)
             };
@@ -1209,7 +1332,7 @@ namespace Logic.DAL
 
         public UserBaseInfoModel GetUserInfo(string openid)
         {
-            string strSql = "select UserId,UserIdentity,RealName,NickName,HeadImg,IsActive,Mobile,ApplyStatus,Money-MoneyLocked as UserMoney,Address from UserList UserList with(nolock)  where openId=@openId";
+            string strSql = "select UserId,UserIdentity,RealName,NickName,HeadImg,IsActive,Mobile,ApplyStatus,Money-MoneyLocked as UserMoney,Address,shopId from UserList with(nolock)  where openId=@openId";
             var param = new[] {
                 new SqlParameter("@openId",openid)
             };
@@ -1261,5 +1384,304 @@ namespace Logic.DAL
             return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
         }
 
+        /// <summary>
+        /// 修改用户的门店
+        /// </summary>
+        /// <param name="shopId">The shop identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>true if XXXX, false otherwise.</returns>
+        public bool UpdateUserShopId(int shopId, int userId)
+        {
+            string strSql = "update UserList set shopId=@shopId where UserId=@UserId";
+            var param = new[] {
+                        new SqlParameter("@shopId",shopId),
+                        new SqlParameter("@UserId",userId)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+        }
+
+
+
+
+        /// <summary>
+        /// 获取门店
+        /// </summary>
+        /// <param name="BrandId">The brand identifier.</param>
+        /// <param name="model">The model.</param>
+        /// <returns>ResultPageModel.</returns>
+        public ResultPageModel GetShopList(int BrandId, SearchModel model)
+        {
+            ResultPageModel result = new ResultPageModel();
+            if (model == null)
+                return result;
+            string strSql = @"select  S.ShopID,S.BrandId,B.Title,S.ShopName,S.ShopAddress,S.ShopContacts,S.ShopTel,S.CreateTime  from ShopList S
+                                left join BrandList B ON B.BrandId=S.BrandId
+                                where 1=1  and S.IsDel=0 
+                               ";
+
+            if (BrandId > 0)
+            {
+                strSql += " and S.BrandId=@BrandId";
+            }
+            if (!string.IsNullOrEmpty(model.key))
+            {
+                strSql += string.Format(" and S.ShopName like '%{0}%' ", model.key);
+            }
+
+            if (!string.IsNullOrEmpty(model.startTime))
+                strSql += " and CONVERT(nvarchar(10),S.CreateTime,121)>=CONVERT(nvarchar(10),@startTime,121) ";
+            if (!string.IsNullOrEmpty(model.endTime))
+                strSql += " and CONVERT(nvarchar(10),S.CreateTime,121)<=CONVERT(nvarchar(10),@endTime,121) ";
+
+            var param = new[] {
+                        new SqlParameter("@BrandId", BrandId),
+                        new SqlParameter("@startTime", model.startTime),
+                        new SqlParameter("@endTime", model.endTime)
+            };
+
+            //生成sql语句
+            return getPageData<ShopModel>(model.PageSize, model.PageIndex, strSql, "S.CreateTime", false, param);
+
+        }
+
+
+        public ResultPageModel GetShopList(SearchModel model)
+        {
+            ResultPageModel result = new ResultPageModel();
+            if (model == null)
+                return result;
+            string strSql = @"select shop.ShopID,shop.ShopName from ShopList shop
+                            left join CouponLog s on s.ShopId=shop.ShopId
+                            left join CouponList c on c.CouponId=s.CouponId
+                            where  c.IsDel=0 and c.IsEnable=1 and s.IsUse=0 and s.IsRecycle=0 and s.ShopId>0
+                               ";
+
+            if (model.UserId > 0)
+            {
+                strSql += " and s.UserId=@UserId ";
+            }
+            strSql += "  group by shop.ShopID,shop.ShopName ,shop.CreateTime";
+            var param = new[] {
+                        new SqlParameter("@UserId", model.UserId)
+            };
+
+            //生成sql语句
+            return getPageData<ShopModel>(model.PageSize, model.PageIndex, strSql, "shop.CreateTime", false, param);
+
+        }
+
+
+
+
+
+
+        public List<ShopModel> GetShopIds(int brandid)
+        {
+            string strSql = "select ShopId,BrandId,ShopName,ShopAddress,ShopTel,ShopContacts,CreateTime from ShopList where BrandId=@BrandId and IsDel=0";
+            var param = new[] {
+                        new SqlParameter("@BrandId", brandid)
+            };
+            using (SqlDataReader dr = DbHelperSQLP.ExecuteReader(WebConfig.getConnectionString(), CommandType.Text, strSql, param))
+            {
+                return DbHelperSQLP.GetEntityList<ShopModel>(dr);
+            }
+        }
+
+
+        /// <summary>
+        /// 更新门店信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool UpdateShopInfo(ShopModel model)
+        {
+            string strSql = @"update ShopList set ShopName=@ShopName,BrandId=@BrandId,ShopAddress=@ShopAddress,ShopContacts=@ShopContacts,ShopTel=@ShopTel where ShopID=@ShopID";
+            var param = new[] {
+                        new SqlParameter("@ShopName", model.ShopName),
+                        new SqlParameter("@BrandId", model.BrandId),
+                        new SqlParameter("@ShopAddress", model.ShopAddress),
+                        new SqlParameter("@ShopContacts", model.ShopContacts),
+                        new SqlParameter("@ShopTel", model.ShopTel),
+                        new SqlParameter("@ShopID",model.ShopID)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+        }
+
+        /// <summary>
+        /// 添加门店
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int AddShopInfo(ShopModel model)
+        {
+            string strSql = @"insert into ShopList(ShopName,ShopAddress,ShopContacts,ShopTel,BrandId)
+                                values (@ShopName,@ShopAddress,@ShopContacts,@ShopTel,@BrandId)";
+            var param = new[] {
+                        new SqlParameter("@ShopName", model.ShopName),
+                        new SqlParameter("@ShopAddress", model.ShopAddress),
+                        new SqlParameter("@ShopContacts", model.ShopContacts),
+                        new SqlParameter("@ShopTel", model.ShopTel),
+                        new SqlParameter("@BrandId", model.BrandId)
+                };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param);
+
+        }
+
+        /// <summary>
+        /// 删除门店
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        public bool DeleteShopInfo(int shopId)
+        {
+            string strSql = "update ShopList set IsDel=1 where ShopID=@ShopID";
+            var param = new[] {
+                        new SqlParameter("@ShopID",shopId)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+        }
+
+        /// <summary>
+        /// 添加优惠券和门店的关联
+        /// </summary>
+        /// <param name="shopId">The shop identifier.</param>
+        /// <param name="couponId">The coupon identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public bool AddShopCouponInfo(int shopId, int couponId)
+        {
+            string strSql = @"insert into ShopCouponList(ShopId,CouponId) values(@ShopId,@CouponId)";
+            var param = new[] {
+                        new SqlParameter("@ShopID",shopId),
+                        new SqlParameter("@CouponId",couponId)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+
+        }
+
+
+
+        public bool AddGoodsCouponInfo(int GoodsId, int couponId)
+        {
+            string strSql = @"insert into GoodsCouponList(GoodsId,CouponId) values(@GoodsId,@CouponId)";
+            var param = new[] {
+                        new SqlParameter("@GoodsId",GoodsId),
+                        new SqlParameter("@CouponId",couponId)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// 根据优惠券ID，获取门店ID
+        /// </summary>
+        /// <param name="couponId">The coupon identifier.</param>
+        /// <returns>List&lt;ShopJsonModel&gt;.</returns>
+        public List<ShopJsonModel> GetShopListByCouponId(int couponId)
+        {
+            string strSql = @"select s.ShopName as title,s.ShopId as value,s.ShopId as description from ShopCouponList c
+                            left join ShopList s on s.ShopId=c.ShopId
+                            where CouponId=@CouponId and s.IsDel=0";
+            var param = new[] {
+                        new SqlParameter("@CouponId",couponId)
+            };
+            using (SqlDataReader dr = DbHelperSQLP.ExecuteReader(WebConfig.getConnectionString(), CommandType.Text, strSql, param))
+            {
+                return DbHelperSQLP.GetEntityList<ShopJsonModel>(dr);
+            }
+        }
+
+
+        /// <summary>
+        /// 获取商品
+        /// </summary>
+        /// <param name="BrandId">The brand identifier.</param>
+        /// <param name="model">The model.</param>
+        /// <returns>ResultPageModel.</returns>
+        public ResultPageModel GetGoodsList(int BrandId, SearchModel model)
+        {
+            ResultPageModel result = new ResultPageModel();
+            if (model == null)
+                return result;
+            string strSql = @"select  S.GoodsId,S.BrandId,B.Title,S.GoodsName,S.CreateTime  from GoodsList S
+                                left join BrandList B ON B.BrandId=S.BrandId
+                                where 1=1  and S.IsDel=0 
+                               ";
+
+            if (BrandId > 0)
+            {
+                strSql += " and S.BrandId=@BrandId";
+            }
+            if (!string.IsNullOrEmpty(model.key))
+            {
+                strSql += string.Format(" and S.GoodsName like '%{0}%' ", model.key);
+            }
+
+            if (!string.IsNullOrEmpty(model.startTime))
+                strSql += " and CONVERT(nvarchar(10),S.CreateTime,121)>=CONVERT(nvarchar(10),@startTime,121) ";
+            if (!string.IsNullOrEmpty(model.endTime))
+                strSql += " and CONVERT(nvarchar(10),S.CreateTime,121)<=CONVERT(nvarchar(10),@endTime,121) ";
+
+            var param = new[] {
+                        new SqlParameter("@BrandId", BrandId),
+                        new SqlParameter("@startTime", model.startTime),
+                        new SqlParameter("@endTime", model.endTime)
+            };
+
+            //生成sql语句
+            return getPageData<GoodsModel>(model.PageSize, model.PageIndex, strSql, "S.CreateTime", false, param);
+
+        }
+
+        /// <summary>
+        /// 删除商品
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        public bool DeleteGoodsInfo(int goodsId)
+        {
+            string strSql = "update GoodsList set IsDel=1 where GoodsId=@GoodsId";
+            var param = new[] {
+                        new SqlParameter("@GoodsId",goodsId)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+        }
+
+        /// <summary>
+        /// 更新商品信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool UpdateGoodsInfo(GoodsModel model)
+        {
+            string strSql = @"update GoodsList set GoodsName=@GoodsName,BrandId=@BrandId where GoodsId=@GoodsId";
+            var param = new[] {
+                        new SqlParameter("@GoodsName", model.GoodsName),
+                        new SqlParameter("@BrandId", model.BrandId),
+                        new SqlParameter("@GoodsId",model.GoodsId)
+            };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param) > 0;
+        }
+        /// <summary>
+        /// 添加门店
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int AddGoodsInfo(GoodsModel model)
+        {
+            string strSql = @"insert into GoodsList(GoodsName,BrandId)
+                                values (@GoodsName,@BrandId)";
+            var param = new[] {
+                        new SqlParameter("@GoodsName", model.GoodsName),
+                        new SqlParameter("@BrandId", model.BrandId)
+                };
+            return DbHelperSQLP.ExecuteNonQuery(WebConfig.getConnectionString(), CommandType.Text, strSql, param);
+
+        }
     }
 }

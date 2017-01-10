@@ -24,6 +24,7 @@
                 <p class="date"><%=couponInfo.Title %></p>
                 <p class="ids">使用期限</p>
                 <p class="time" title=""><%=couponInfo.time %></p>
+                <p class="pingpai" title=""><span><%=couponInfo.BrandName %></span><span>【<%=couponInfo.GoodsName %>】</span></p>
                 <div class="q-count">
                     <em>¥</em><%=couponInfo.Money.ToString("f2").Split('.')[0] %>.<span><%=couponInfo.Money.ToString("f2").Split('.')[1] %></span>
                 </div>
@@ -51,18 +52,15 @@
                     <input class="weui_input" type="tel" id="txtmobile" value="<%=userInfo.Mobile%>" placeholder="手机">
                 </div>
             </div>
-            <%--            <div class="weui_cell weui_vcode">
+            <div class="weui_cell">
                 <div class="weui_cell_hd margt">
-                    <label class="weui_label">
-                        <img src="images/yzm.png" width="25px;"></label>
+                    <label for="name" class="weui_label">
+                        <img src="images/mdmd.png" width="25px;"></label>
                 </div>
                 <div class="weui_cell_bd weui_cell_primary">
-                    <input class="weui_input" type="number" placeholder="验证码">
+                    <input class="weui_input" style="width: 95%;" id="shops" type="text" value="" readonly="" data-values="" placeholder="选择门店">
                 </div>
-                <div class="weui_cell_ft">
-                    <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary">获取验证码</a>
-                </div>
-            </div>--%>
+            </div>
         </div>
         <p style="height: 20px"></p>
         <a href="javascript:onCouponGet();" class="weui_btn weui_btn_warn anniu ">领取</a>
@@ -84,13 +82,29 @@
 <script src="js/couponHelper.js"></script>
 <script>
     var currentUserId = '<%=userInfo.UserId%>';
-
+    var _shopstr = '<%=shopJson%>';
+    var shopJson = eval('(' + _shopstr + ')');
+    var shops = "";
     $(function () {
         FastClick.attach(document.body);
     });
 
     //获取更多优惠券
     function onMoreCouponList() {
-        window.location.href = "turncouponlist.aspx?fr=list&userid=" + userid;
+        window.location.href ="turncouponlist.aspx?fr=list&userid=" + userid;
     }
+    $("#shops").select({
+        title: "选择门店",
+        multi: true,
+        min: 1,
+        max: 10,
+        items: shopJson,
+        beforeClose: function (values, titles) {         
+            shops = values;            
+            return true;
+        },
+        onChange: function (d) {
+            //console.log(this, d);
+        }
+    });
 </script>
