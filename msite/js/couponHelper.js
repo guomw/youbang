@@ -123,7 +123,7 @@ function GetBrandList() {
         if (ret) {
             if (ret.status == 200) {
                 if (ret.data) {
-                    var html = '<li class="fixed brandli" id="brandli0"><a href="javascript:GetGoodsList(0);">全部</a></li>';
+                    var html = '<li class="brandli" id="brandli0"><a href="javascript:GetGoodsList(0);">全部</a></li>';
                     $.each(ret.data, function (i, item) {
                         html += '<li class="brandli" id="brandli' + item.BrandId + '"><a href="javascript:GetGoodsList(' + item.BrandId + ');">' + item.Title + '</a></li>';
                     });
