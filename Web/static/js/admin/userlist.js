@@ -72,7 +72,7 @@ var userHelper = {
 
 
                             if (item.UserIdentity > 0)
-                                tempHtml = tempHtml.replace("{LableText2}", item.UserIdentity == 1 ? "设置成店员" : "");
+                                tempHtml = tempHtml.replace("{LableText2}", item.UserIdentity == 1 ? "设置成店员" : "取消店员");
                             else
                                 tempHtml = tempHtml.replace("{LableText2}", "");
 
